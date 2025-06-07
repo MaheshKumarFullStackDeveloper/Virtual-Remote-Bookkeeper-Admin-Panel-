@@ -15,10 +15,9 @@ export default function AuthCheck({children} :{children:ReactNode}){
 
     useEffect(()=>{
         const checkAuth = async()=>{
-               console.log("check auth responce 2 ");
             try{
                const response= await verifyAuth({}).unwrap();
-               console.log("check auth responce 3 ",response);
+             //  console.log("check suth responce ",response);
                if(response.success){
                   dispatch(setUser(response.data))
                   dispatch(setEmailVerified(response.data.isVerified))
@@ -35,7 +34,6 @@ export default function AuthCheck({children} :{children:ReactNode}){
         };
 
         if(!user && isLoggedIn){
-              console.log("check auth responce 1 ");
             checkAuth();
         }else{
            setIsCheckingAuth(false);

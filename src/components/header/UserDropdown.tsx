@@ -3,23 +3,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-/* import { useRouter } from "next/navigation"; */
-import {  useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import {  useVerifyAuthMutation } from "@/app/store/api";
-/* import { logout } from "@/app/store/slice/userSlice"; */
+import { useLogOutMutation } from "@/app/store/api";
+import { logout } from "@/app/store/slice/userSlice";
 import toast from "react-hot-toast";
 import { User2Icon } from 'lucide-react';
 
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  /*   const router =useRouter();
+    const router =useRouter();
   const dispatch= useDispatch();
-  const [logOutMutation] =useLogOutMutation(); */
-   const [verifyAuth]= useVerifyAuthMutation();
+  const [logOutMutation] =useLogOutMutation();
   const user = useSelector((state: RootState) => state?.user?.user);
-  console.log("header check on user ",user);
+console.log("check auth user ",user);
 /*    if (!user) {
        router.push('/signin');
 
@@ -28,13 +27,10 @@ export default function UserDropdown() {
 
     const handleLogout= async()=>{
      try{
-      
-          const response= await verifyAuth({}).unwrap();
-               console.log("header check auth responce 4 ",response);
-         /*   await logOutMutation({}).unwrap();
-           dispatch(logout()); */
+           await logOutMutation({}).unwrap();
+           dispatch(logout());
            toast.success('user logout Successfully');
-         // router.push('/signin');
+          router.push('/signin');
      }catch(error){
            console.error("logout error",error);
              toast.error("Failed to logout"); 
@@ -57,7 +53,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle"
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-             <Avatar className='relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'>
+             <Avatar className='w-8 h-8 relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'>
             {user?.profilePicture ? (
               <AvatarImage alt='user-img'></AvatarImage>
             ): userPlaceholder ?(

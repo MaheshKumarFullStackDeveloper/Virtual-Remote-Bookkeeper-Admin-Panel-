@@ -42,7 +42,7 @@ interface LoginFormData {
         toast.success("Login successfully")
        
         dispatch(authStatus())
-      //   window.location.reload();
+         window.location.reload();
       
       }
 
