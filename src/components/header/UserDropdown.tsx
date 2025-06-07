@@ -19,10 +19,10 @@ export default function UserDropdown() {
   const [logOutMutation] =useLogOutMutation();
   const user = useSelector((state: RootState) => state?.user?.user);
 console.log("check auth user ",user);
-/*    if (!user) {
+  if (!user) {
        router.push('/signin');
 
-  } */
+  } 
   const userPlaceholder=user?.name?.split(" ").map((name:string)=>name[0].toUpperCase()).join("");
 
     const handleLogout= async()=>{
