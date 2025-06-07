@@ -17,7 +17,7 @@ export default function UserDropdown() {
   /*   const router =useRouter();
   const dispatch= useDispatch();
   const [logOutMutation] =useLogOutMutation(); */
-   const [verifyAuth,{isLoading}]= useVerifyAuthMutation();
+   const [verifyAuth]= useVerifyAuthMutation();
   const user = useSelector((state: RootState) => state?.user?.user);
   console.log("header check on user ",user);
 /*    if (!user) {
