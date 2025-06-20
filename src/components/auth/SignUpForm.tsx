@@ -3,12 +3,14 @@ import { useRegisterMutation } from "@/app/store/api";
 import { toggleLoginDialog } from "@/app/store/slice/userSlice";
 import {  EyeCloseIcon, EyeIcon, LockIcon, MailIcon, UserIcon } from "@/icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { LoaderIcon } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@/components/ui/input" 
 import { Button } from "@/components/ui/button"
+import { RootState } from "@/app/store/store";
+import { useRouter } from "next/navigation";
 interface SignUpFormData {
   name: string;
   email: string;
@@ -19,8 +21,10 @@ interface SignUpFormData {
 export default function SignUpForm() {
 
   const dispatch=useDispatch();
+  const router =useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [signupLoading, setSignupLoading] = useState(false);
+  const user = useSelector((state: RootState) => state?.user?.user);
   const [register]=useRegisterMutation()
   const {
     register: registerSignUp,
@@ -44,6 +48,12 @@ export default function SignUpForm() {
     }finally{    setSignupLoading(false);
     }
   }
+    useEffect(() => {
+            if (user) {
+              router.push('/');
+           
+          }
+       }, []);
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
      

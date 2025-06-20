@@ -1,7 +1,12 @@
 "use client";
 
+import AuthCheck from "@/app/store/Provider/AuthProvider";
+import { persistor, store } from "@/app/store/store";
 import type React from "react";
 import { createContext, useState, useContext, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 type Theme = "light" | "dark";
 
@@ -35,7 +40,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         document.documentElement.classList.remove("dark");
       }
-    }
+    } 
   }, [theme, isInitialized]);
 
   const toggleTheme = () => {
@@ -43,9 +48,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+      <Provider store={store} >
+         <Toaster/> 
+          <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+           
+            <AuthCheck> 
+              <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                  {children}
+              </ThemeContext.Provider>
+          </AuthCheck>
+          </PersistGate>
+   </Provider>
   );
 };
 

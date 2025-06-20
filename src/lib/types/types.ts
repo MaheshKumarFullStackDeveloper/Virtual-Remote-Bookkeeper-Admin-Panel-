@@ -1,63 +1,121 @@
 export interface BookDetails {
 
- _id :string;
- title :string;
- images :string[];
- subject :string;
- category :string;
- condition :string;
- classType :string;
- price:number; 
- author:string;
- edition?:string;
- description?:string;
-finalPrice:number;
-shippingCharge:string;
-seller:UserData;
-paymentMode:'UPI'|'Bank Account';
-createdAt:Date;
-paymentDetails:{
-    upi?:string;
-    bankDetails?:{
-        accountNumber:string;
-        ifscCode:string;
-        bankName:string;
+  _id: string;
+  title: string;
+  images: string[];
+  subject: string;
+  category: string;
+  condition: string;
+  classType: string;
+  price: number;
+  author: string;
+  edition?: string;
+  description?: string;
+  finalPrice: number;
+  shippingCharge: string;
+  seller: UserData;
+  paymentMode: 'UPI' | 'Bank Account';
+  createdAt: Date;
+  paymentDetails: {
+    upi?: string;
+    bankDetails?: {
+      accountNumber: string;
+      ifscCode: string;
+      bankName: string;
 
     }
 
-}
-}
-
-
-export interface UserData  {
- name :string;
- email :string;
- _id:string;
- isVerified: boolean;
- updatedAt:string;
- agreeTerms :boolean;
- profilePicture? :string;
- phoneNumber? :string;
- addresses:Address[]
+  }
 }
 
+export interface Sections {
+  _id: string;
+  title: string;
+  page: string;
+  order: string;
+  content: string;
+  pageId?: string;
+}
 
-export interface Address  {
-_id:string;
- addressLine1 :string;
- addressLine2 :string;
- phoneNumber? :string;
- city? :string;
- state? :string;
- pincode :string;
+export interface Page {
+  _id: string;
+  title: string;
+  slug: string;
+  status: string;
+  metaTitle: string;
+  metaDescription: string;
+  pageId?: string;
+  sections?: Sections[];
+}
+export interface Blog {
+  _id: string;
+  blogId: string;
+  title: string;
+  slug: string;
+  image: string;
+  status: string;
+  metaTitle: string;
+  metaDescription: string;
+  content: string;
+  categories?: Category[];
+}
+export interface Category {
+  _id: string;
+  categoryId: string;
+  title: string;
+  slug: string;
+  order: number;
+  status: string;
+  metaTitle: string;
+  metaDescription: string;
+}
+
+
+
+export interface AlertProps {
+  variant: "success" | "error" | "warning" | "info";
+  title: string;
+  message: string;
+  showLink: boolean;
+}
+export interface ImageDetails {
+  _id: string;
+  image: string[];
+  user: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+export interface UserData {
+  name: string;
+  email: string;
+  _id: string;
+  isVerified: boolean;
+  updatedAt: string;
+  agreeTerms: boolean;
+  profilePicture?: string;
+  phoneNumber?: string;
+  addresses: Address[]
+}
+
+
+export interface Address {
+  _id: string;
+  addressLine1: string;
+  addressLine2: string;
+  phoneNumber?: string;
+  city?: string;
+  state?: string;
+  pincode: string;
 }
 
 export interface Product {
-_id:string;
- title :string;
- images :string[];
- price :number;
- finalPrice :number;
-  shippingCharge :string;
+  _id: string;
+  title: string;
+  images: string[];
+  price: number;
+  finalPrice: number;
+  shippingCharge: string;
 }
 

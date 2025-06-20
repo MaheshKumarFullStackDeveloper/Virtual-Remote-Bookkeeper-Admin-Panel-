@@ -6,7 +6,10 @@
 @theme {
   --font-*: initial;
   --font-outfit: Outfit, sans-serif;
-
+  --font-dm: 'DM Sans', 'sans-serif';
+  --font-mono: 'Poppins';
+  --font-Roboto: 'Roboto';
+  --font-georgia: 'Georgia', serif;
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
   --breakpoint-xsm: 425px;
@@ -868,4 +871,86 @@ span.flatpickr-weekday,
   body {
     @apply bg-background text-foreground;
   }
+  .toast-message {
+  z-index: 9999;
+}
+
+ h2,h3,h4,h1,h6 {
+    @apply text-4xl text-center  text-[#020202] leading-snug py-2.5 font-georgia  font-medium  capitalize
+    }
+  h1 {  @apply  text-[4.209rem] }
+
+  h2 {
+    @apply text-[3.157rem]
+  }
+  h3 {
+    @apply  text-[2.369rem]
+  }
+  h4 {
+    @apply  text-[1.777rem]
+  }
+  p{
+    @apply  text-[16px] text-white leading-[1.66em]
+  }
+  .AccordionContents  ul{
+    @apply  pl-[25px] mb-[1em] list-disc font-mono
+  }
+  .paghadsec  ul{
+    @apply  pl-[25px] mb-[1em] list-disc font-mono
+  }
+  .AccordionContents  p{
+    @apply text-[#dd9933] 
+  }
+  .pagesec  h6{
+    @apply  text-[30px] font-bold
+  }
+
+  .pagesec p{
+    @apply text-[#596475]
+  }
+  .singleBlogPage  {
+    @apply text-left    max-w-[1100px]  w-full m-auto p-2
+  }
+
+  .singleBlogPage p {
+    @apply my-3.5  leading-[1.66em] text-[#596475] text-[1rem]  text-left
+  }
+
+  .singleBlogPage h2 {
+    @apply  text-[#020202] text-[28px]  text-left
+  }
+  .singleBlogPage h3 {
+    @apply  text-[#020202] text-[28px]  text-left
+  }
+  .singleBlogPage h4 {
+    @apply  text-[#020202] text-[28px]  text-left font-dm
+  }
+  .singleBlogPage a {
+    @apply  text-[#285bd4] 
+  }
+  .singleBlogPage table {
+    @apply  table-fixed border-collapse border border-gray-400 w-full
+  }
+  .singleBlogPage table tr{
+    @apply  table-row 
+  }
+  .singleBlogPage table td{
+    @apply   leading-[1.66em] text-[#596475] text-[1rem]  text-left p-[.5em] border border-gray-400
+  }
+  .pagesec1 ul{
+    @apply list-disc p-4
+  }
+  .rsw-ce ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+  EditIcon,TrashIcon{
+    cursor: pointer;
+  }
+
 }

@@ -1,18 +1,106 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "../../hooks/useModal";
 import { Modal } from "../ui/modal";
-import Button from "../ui/button/Button";
-import Input from "../form/input/InputField";
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import Label from "../form/Label";
+import { useUpdateUserPasswordMutation } from "@/app/store/api";
+import { useForm } from "react-hook-form";
+import { LoaderIcon } from "react-hot-toast";
+import Alert from "../ui/alert/Alert";
+import { AlertProps } from "@/lib/types/types";
+
+
+interface PasswordFormData {
+  oldpassword: string;
+  password: string;
+  conpassword: string;
+}
+
 
 export default function UserPasswordCard() {
   const { isOpen, openModal, closeModal } = useModal();
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
-    closeModal();
+  const [updateLoading, setupdateLoading] = useState(false);
+  const [UpdateUserPassword] = useUpdateUserPasswordMutation()
+  const [alerts, setAlerts] = useState<AlertProps[] | null>(null);
+
+  const {
+    register: registerUpdate,
+    handleSubmit: handleUpdateSubmit,
+    watch,
+    formState: { errors: UpdateError },
+  } = useForm<PasswordFormData>({});
+
+  const onSubmitUpdate = async (data: PasswordFormData) => {
+    setupdateLoading(true);
+
+    try {
+      const { oldpassword, password } = data;
+      const result = await UpdateUserPassword({ oldpassword, password }).unwrap();
+      console.log("this is Update result", result)
+      if (result.success) {
+
+        setAlerts([
+          {
+            variant: "success",
+            title: "Update Pssword successfully",
+            message: "",
+            showLink: false,
+          },
+        ]);
+
+      } else {
+
+        setAlerts([
+          {
+            variant: "success",
+            title: result.message,
+            message: "",
+            showLink: false,
+          },
+        ]);
+      }
+
+    } catch (error: unknown) {
+      console.log("Error on Update", error);
+      if (error && typeof error === "object" && "data" in error) {
+        const errorData = (error as { data?: { message?: string } }).data;
+        setAlerts([
+          {
+            variant: "error",
+            title: "Error!",
+            message: errorData?.message || "An unexpected error occurred.",
+            showLink: false,
+          },
+        ]);
+      } else {
+        setAlerts([
+          {
+            variant: "error",
+            title: "Unknown Error!",
+            message: "An unexpected error occurred.",
+            showLink: false,
+          },
+        ]);
+      }
+
+
+
+    } finally {
+      setupdateLoading(false);
+
+    }
+  }
+
+
+
+  const handleFormChange = () => {
+    if (alerts) {
+      setAlerts(null);
+    }
   };
+
   return (
     <>
       <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -58,37 +146,118 @@ export default function UserPasswordCard() {
               Update your details to keep your profile up-to-date.
             </p>
           </div>
-          <form className="flex flex-col">
-            <div className="px-2 overflow-y-auto custom-scrollbar">
-              <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                <div>
-                  <Label>Country</Label>
-                  <Input type="text" defaultValue="United States" />
-                </div>
+          <form onChange={handleFormChange} onSubmit={handleUpdateSubmit(onSubmitUpdate)} className="flex flex-col">
+            <div className="custom-scrollbar h-[400px] overflow-y-auto px-2 pb-3">
 
-                <div>
-                  <Label>City/State</Label>
-                  <Input type="text" defaultValue="Arizona, United States." />
-                </div>
+              <div className="mt-7">
+                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                  Password change
+                </h5>
+                {alerts &&
+                  alerts.map((alert, index) => (
+                    <Alert
+                      key={index}
+                      variant={alert.variant}
+                      title={alert.title}
+                      message={alert.message}
+                      showLink={alert.showLink}
+                    />
+                  ))}
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5 ">
 
-                <div>
-                  <Label>Postal Code</Label>
-                  <Input type="text" defaultValue="ERT 2489" />
-                </div>
 
-                <div>
-                  <Label>TAX ID</Label>
-                  <Input type="text" defaultValue="AS4568384" />
+
+                  <div className="col-span-1">
+                    <Label>Old Passwod</Label>
+                    <Input
+                      {...registerUpdate("oldpassword", {
+                        required: "old password is required",
+                      })}
+                      placeholder="oldpassword"
+                      type="text"
+
+                      className="pl-10"
+                    />
+
+
+                    {UpdateError.oldpassword && (
+                      <p className="text-red-700 text-sm">
+                        {UpdateError.oldpassword.message}
+                      </p>
+                    )}
+                  </div>
+
+
+
+
+                  <div className="col-span-1">
+                    <Label>Passwod</Label>
+                    <Input
+                      {...registerUpdate("password", {
+                        required: " password is required",
+                      })}
+                      placeholder="password"
+                      type="text"
+
+                      className="pl-10"
+                    />
+
+
+                    {UpdateError.password && (
+                      <p className="text-red-700 text-sm">
+                        {UpdateError.password.message}
+                      </p>
+                    )}
+                  </div>
+
+
+
+
+                  <div className="col-span-1">
+                    <Label>Confirm Passwod</Label>
+                    <Input
+                      {...registerUpdate("conpassword", {
+                        required: "confirm password is required",
+                        validate: (value) =>
+                          value === watch("password") || "Passwords do not match",
+                      })}
+
+                      placeholder="confirm password"
+                      type="text"
+
+                      className="pl-10"
+                    />
+
+
+                    {UpdateError.conpassword && (
+                      <p className="text-red-700 text-sm">
+                        {UpdateError.conpassword.message}
+                      </p>
+                    )}
+                  </div>
+
+
+
+
                 </div>
               </div>
             </div>
+
             <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Close
               </Button>
-              <Button size="sm" onClick={handleSave}>
-                Save Changes
+              <Button size="sm" variant="outline" type="submit">
+                {updateLoading ? (
+                  <>
+                    {" "}
+                    <LoaderIcon className="animate-spin mr-2 h-[20px] w-[20px]" />{" "}
+                  </>
+                ) : (
+                  <>Update</>
+                )}
               </Button>
+
             </div>
           </form>
         </div>
