@@ -13,9 +13,7 @@ import Alert from "@/components/ui/alert/Alert";
 
 import Select from "react-select";
 import { useParams } from "next/navigation";
-type FormValues = {
-  categories: string[];
-};
+
 
 import CustomEditor from "../form/CustomEditor";
 
@@ -23,8 +21,8 @@ import CustomEditor from "../form/CustomEditor";
 export default function EditBlog() {
   const params = useParams();
   const slug = params.slug;
-  const [oldcontentvalue, setOldcontentvalue] = useState<string>('<b>HTML</b>');
-  const [checkBlog, setCheckBlog] = useState<String>('Add New Blog')
+  const [oldcontentvalue, setOldcontentvalue] = useState<string>("");
+  const [checkBlog, setCheckBlog] = useState<string>('Add New Blog')
   const [categories, setCategories] = useState<Category[]>([])
   const [updateLoading, setupdateLoading] = useState(false);
   const [AddUpadateBlog] = useAddUpadateBlogMutation()

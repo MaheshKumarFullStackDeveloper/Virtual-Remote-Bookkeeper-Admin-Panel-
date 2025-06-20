@@ -38,9 +38,6 @@ export default function AddBlog() {
     register: registerUpdate,
     handleSubmit: handleUpdateSubmit,
     control,
-    setValue,
-    watch,
-    reset,
     formState: { errors: UpdateError },
   } = useForm<Blog>({});
 
