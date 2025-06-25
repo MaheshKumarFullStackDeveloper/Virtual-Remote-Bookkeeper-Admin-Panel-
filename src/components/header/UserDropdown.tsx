@@ -1,12 +1,12 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { useLogOutMutation } from "@/app/store/api";
+import { useLogOutMutation, useVerifyAuthMutation } from "@/app/store/api";
 import { logout } from "@/app/store/slice/userSlice";
 import toast from "react-hot-toast";
 import { User2Icon } from 'lucide-react';
@@ -17,6 +17,30 @@ export default function UserDropdown() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [logOutMutation] = useLogOutMutation();
+
+
+  const [verifyAuth, { isLoading }] = useVerifyAuthMutation();
+  useEffect(() => {
+    const checkNewAuth = async () => {
+      try {
+        const response = await verifyAuth({}).unwrap();
+        console.log("check new function ", response);
+      } catch (error) {
+        console.log("logout error", error);
+
+      }
+
+    };
+
+    const interval = setInterval(() => {
+      checkNewAuth();
+    }, 5000); // 5 seconds
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, [verifyAuth]);
+
+
+
   const user = useSelector((state: RootState) => state?.user?.user);
   console.log("check auth user ", user);
   if (!user) {
