@@ -10,7 +10,7 @@ import {
 
 
 import { EditIcon, PlusIcon, TrashIcon } from "lucide-react";
-import { useAddUpadateMenuMutation, useDeleteItemByIdMutation, useDeleteMenuByIdMutation, useGetAllMenusAndAllItemsQuery, useGetMenusQuery } from "@/app/store/api";
+import { useAddUpadateMenuMutation, useDeleteItemByIdMutation, useDeleteMenuByIdMutation, useGetAllMenusAndAllItemsQuery } from "@/app/store/api";
 import toast, { LoaderIcon } from "react-hot-toast";
 import { AlertProps, DeleteMenuParams, Item, Menu } from "@/lib/types/types";
 import { useForm } from "react-hook-form";
@@ -64,17 +64,23 @@ export default function MenuList() {
 
     try {
 
-      let result: any = [];
+
       if (type === 'menu') {
-        let result = await deleteMenuById(menuId).unwrap();
+        const result = await deleteMenuById(menuId).unwrap();
+        if (result.success) {
+          toast.success("Delete Menu successfully", { position: 'bottom-center' })
+          console.log("This is delete result", result)
+          setRefreshMenu("refresh");
+        }
       } else {
-        let result = await deleteItemById(menuId).unwrap();
+        const result = await deleteItemById(menuId).unwrap();
+        if (result.success) {
+          toast.success("Delete Item successfully", { position: 'bottom-center' })
+          console.log("This Item is delete result", result)
+          setRefreshMenu("refresh");
+        }
       }
-      if (result.success) {
-        toast.success("Delete Menu successfully", { position: 'bottom-center' })
-        console.log("This is delete result", result)
-        setRefreshMenu("refresh");
-      }
+
 
     } catch (error) {
       console.log("Error on login", error)
