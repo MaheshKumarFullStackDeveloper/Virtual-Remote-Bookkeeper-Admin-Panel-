@@ -1,12 +1,12 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { useLogOutMutation, useVerifyAuthMutation } from "@/app/store/api";
+import { useLogOutMutation } from "@/app/store/api";
 import { logout } from "@/app/store/slice/userSlice";
 import toast from "react-hot-toast";
 import { User2Icon } from 'lucide-react';
@@ -17,35 +17,10 @@ export default function UserDropdown() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [logOutMutation] = useLogOutMutation();
-
-
-  const [verifyAuth] = useVerifyAuthMutation();
-  useEffect(() => {
-    const checkNewAuth = async () => {
-      try {
-        const response = await verifyAuth({}).unwrap();
-        console.log("check new function ", response);
-      } catch (error) {
-        console.log("logout error", error);
-
-      }
-
-    };
-
-    const interval = setInterval(() => {
-      checkNewAuth();
-    }, 5000); // 5 seconds
-
-    return () => clearInterval(interval); // cleanup on unmount
-  }, [verifyAuth]);
-
-
-
   const user = useSelector((state: RootState) => state?.user?.user);
   console.log("check auth user ", user);
   if (!user) {
-    //  router.push('/signin');
-
+    router.push('/signin');
   }
   const userPlaceholder = user?.name?.split(" ").map((name: string) => name[0].toUpperCase()).join("");
 
@@ -54,6 +29,7 @@ export default function UserDropdown() {
       await logOutMutation({}).unwrap();
       dispatch(logout());
       toast.success('user logout Successfully');
+      localStorage.removeItem("accessToken");
       router.push('/signin');
     } catch (error) {
       console.error("logout error", error);
