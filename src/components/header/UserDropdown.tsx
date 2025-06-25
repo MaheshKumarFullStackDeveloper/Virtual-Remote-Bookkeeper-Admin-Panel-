@@ -19,7 +19,7 @@ export default function UserDropdown() {
   const [logOutMutation] = useLogOutMutation();
 
 
-  const [verifyAuth, { isLoading }] = useVerifyAuthMutation();
+  const [verifyAuth] = useVerifyAuthMutation();
   useEffect(() => {
     const checkNewAuth = async () => {
       try {
