@@ -78,7 +78,14 @@ const API_URLS = {
 export const api = createApi({
    baseQuery: fetchBaseQuery({
       baseUrl: BASE_URL,
-      credentials: 'include'
+      prepareHeaders: (headers) => {
+         const token = localStorage.getItem("accessToken");
+         if (token) {
+            headers.set("Authorization", `Bearer ${token}`);
+         }
+         return headers;
+      }
+
    }),
    tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu'],
    endpoints: (builder) => ({

@@ -37,6 +37,8 @@ export default function SignInForm() {
     try {
       const { email, password } = data;
       const result = await login({ email, password }).unwrap();
+      localStorage.setItem("accessToken", result.data.accessToken);
+
       console.log("this is login result", result)
       if (result.success) {
         toast.success("Login successfully")
