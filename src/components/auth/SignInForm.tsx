@@ -1,10 +1,10 @@
 "use client";
 import { useLoginMutation } from "@/app/store/api";
 
-import { Input } from "@/components/ui/input" 
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import {  EyeCloseIcon, EyeIcon, LockIcon, MailIcon } from "@/icons";
+import { EyeCloseIcon, EyeIcon, LockIcon, MailIcon } from "@/icons";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,56 +15,56 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/app/store/store";
 export default function SignInForm() {
 
- const router =useRouter();
-  
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+  const router = useRouter();
+
+  interface LoginFormData {
+    email: string;
+    password: string;
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const user = useSelector((state: RootState) => state?.user?.user);
-    const dispatch=useDispatch();
-      const [login]=useLoginMutation()
-        const {
+  const dispatch = useDispatch();
+  const [login] = useLoginMutation()
+  const {
     register: registerLogin,
     handleSubmit: handleLoginSubmit,
     formState: { errors: loginError },
   } = useForm<LoginFormData>();
-    const onSubmitLogin =async(data:LoginFormData)=>{
+  const onSubmitLogin = async (data: LoginFormData) => {
     setLoginLoading(true);
 
-    try{
-      const {email,password}=data;
-      const result = await login({email,password}).unwrap();
-      console.log("this is login result",result)
-      if(result.success){
+    try {
+      const { email, password } = data;
+      const result = await login({ email, password }).unwrap();
+      console.log("this is login result", result)
+      if (result.success) {
         toast.success("Login successfully")
-       
+
         dispatch(authStatus())
-         window.location.reload();
-      
+        // window.location.reload();
+
       }
 
-    }catch(error){
-      console.log("Error on login",error)
+    } catch (error) {
+      console.log("Error on login", error)
       toast.error("Email and password not metch ");
-    }finally{
-    setLoginLoading(false);
+    } finally {
+      setLoginLoading(false);
     }
   }
 
-    useEffect(() => {
-          if (user) {
-            router.push('/');
-         
-        }
-     }, []);
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+
+    }
+  }, []);
 
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="w-full max-w-md sm:pt-10 mx-auto mb-5">
-  
+
       </div>
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
@@ -77,66 +77,66 @@ interface LoginFormData {
             </p>
           </div>
           <div>
-          
-          
-          <form onSubmit={handleLoginSubmit(onSubmitLogin)} className="space-y-4">
-                  <div className="relative">
-                    <Input
-                      {...registerLogin("email", {
-                        required: "Email is required",
-                      })}
-                      placeholder="Email"
-                      type="email"
-                      className="pl-10"
-                    />
-                    <MailIcon
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 "
+
+
+            <form onSubmit={handleLoginSubmit(onSubmitLogin)} className="space-y-4">
+              <div className="relative">
+                <Input
+                  {...registerLogin("email", {
+                    required: "Email is required",
+                  })}
+                  placeholder="Email"
+                  type="email"
+                  className="pl-10"
+                />
+                <MailIcon
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 "
+                  size={20}
+                />
+              </div>
+              {loginError.email && (
+                <p className="text-red-700 text-sm">
+                  {loginError.email.message}
+                </p>
+              )}
+              <div className="relative">
+                <Input
+                  {...registerLogin("password", {
+                    required: "Password is required",
+                  })}
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  className="pl-10"
+                />
+                <LockIcon
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 "
+                  size={20}
+                />
+                {showPassword ? (
+                  <>
+                    <EyeCloseIcon
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 "
                       size={20}
+                      onClick={() => setShowPassword(false)}
                     />
-                  </div>
-                  {loginError.email && (
-                    <p className="text-red-700 text-sm">
-                      {loginError.email.message}
-                    </p>
-                  )}
-                  <div className="relative">
-                    <Input
-                      {...registerLogin("password", {
-                        required: "Password is required",
-                      })}
-                      placeholder="Password"
-                      type={showPassword ? "text" : "password"}
-                      className="pl-10"
-                    />
-                    <LockIcon
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 "
+                  </>
+                ) : (
+                  <>
+                    <EyeIcon
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 "
                       size={20}
+                      onClick={() => setShowPassword(true)}
                     />
-                    {showPassword ? (
-                      <>
-                        <EyeCloseIcon
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 "
-                          size={20}
-                          onClick={() => setShowPassword(false)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <EyeIcon
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 "
-                          size={20}
-                          onClick={() => setShowPassword(true)}
-                        />
-                      </>
-                    )}
-                  </div>
-                  {loginError.password && (
-                    <p className="text-red-700 text-sm">
-                      {loginError.password.message}
-                    </p>
-                  )}
-                   <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-              Forgot Password ? {""}
+                  </>
+                )}
+              </div>
+              {loginError.password && (
+                <p className="text-red-700 text-sm">
+                  {loginError.password.message}
+                </p>
+              )}
+              <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+                Forgot Password ? {""}
                 <Link
                   href="/forgot-password"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
@@ -144,17 +144,17 @@ interface LoginFormData {
                   Update
                 </Link>
               </p>
-                  <Button type="submit" className="w-full font-bold">
-                    {loginLoading ? (
-                      <>
-                        {" "}
-                        <LoaderIcon className="animate-spin mr-2 h-[20px] w-[20px]"  />{" "}
-                      </>
-                    ) : (
-                      <>Login</>
-                    )}
-                  </Button>
-                </form>
+              <Button type="submit" className="w-full font-bold">
+                {loginLoading ? (
+                  <>
+                    {" "}
+                    <LoaderIcon className="animate-spin mr-2 h-[20px] w-[20px]" />{" "}
+                  </>
+                ) : (
+                  <>Login</>
+                )}
+              </Button>
+            </form>
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Don&apos;t have an account? {""}
