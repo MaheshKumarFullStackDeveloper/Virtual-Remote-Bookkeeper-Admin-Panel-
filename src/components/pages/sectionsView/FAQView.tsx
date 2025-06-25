@@ -33,7 +33,7 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
 
       <div className="flex justify-center max-w-[1100px] item-center w-full m-auto p-2">
         <Image
-          src="/FAQView.png"
+          src="/FaqView.png"
           width={725}
           height={352}
           alt="home-banner"

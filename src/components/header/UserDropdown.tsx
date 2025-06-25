@@ -14,33 +14,33 @@ import { User2Icon } from 'lucide-react';
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-    const router =useRouter();
-  const dispatch= useDispatch();
-  const [logOutMutation] =useLogOutMutation();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [logOutMutation] = useLogOutMutation();
   const user = useSelector((state: RootState) => state?.user?.user);
-console.log("check auth user ",user);
+  console.log("check auth user ", user);
   if (!user) {
-       router.push('/signin');
+    //  router.push('/signin');
 
-  } 
-  const userPlaceholder=user?.name?.split(" ").map((name:string)=>name[0].toUpperCase()).join("");
+  }
+  const userPlaceholder = user?.name?.split(" ").map((name: string) => name[0].toUpperCase()).join("");
 
-    const handleLogout= async()=>{
-     try{
-           await logOutMutation({}).unwrap();
-           dispatch(logout());
-           toast.success('user logout Successfully');
-          router.push('/signin');
-     }catch(error){
-           console.error("logout error",error);
-             toast.error("Failed to logout"); 
-     }
+  const handleLogout = async () => {
+    try {
+      await logOutMutation({}).unwrap();
+      dispatch(logout());
+      toast.success('user logout Successfully');
+      router.push('/signin');
+    } catch (error) {
+      console.error("logout error", error);
+      toast.error("Failed to logout");
+    }
   }
 
-function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-  e.stopPropagation();
-  setIsOpen((prev) => !prev);
-}
+  function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  }
 
 
   function closeDropdown() {
@@ -49,27 +49,26 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   return (
     <div className="relative">
       <button
-        onClick={toggleDropdown} 
+        onClick={toggleDropdown}
         className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle"
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-             <Avatar className='w-8 h-8 relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'>
+          <Avatar className='w-8 h-8 relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'>
             {user?.profilePicture ? (
               <AvatarImage alt='user-img'></AvatarImage>
-            ): userPlaceholder ?(
+            ) : userPlaceholder ? (
               <AvatarFallback><b>{userPlaceholder}</b></AvatarFallback>
-            ):(
-              <User2Icon className=''/>
+            ) : (
+              <User2Icon className='' />
             )}
-            </Avatar>
+          </Avatar>
         </span>
 
         <span className="block mr-1 font-medium text-theme-sm">{user?.name}</span>
 
         <svg
-          className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
           width="18"
           height="20"
           viewBox="0 0 18 20"
@@ -96,7 +95,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
             {user?.name}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-           {user?.email}
+            {user?.email}
           </span>
         </div>
 
@@ -126,12 +125,12 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
               Edit profile
             </DropdownItem>
           </li>
-         
-      
+
+
         </ul>
         <span
-        onClick={()=>handleLogout()}
-          
+          onClick={() => handleLogout()}
+
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
         >
           <svg

@@ -15,6 +15,7 @@ import {
   TableIcon,
   UserCircleIcon,
 } from "../icons/index";
+import { NavigationIcon } from "lucide-react";
 
 
 type NavItem = {
@@ -50,6 +51,21 @@ const navItems: NavItem[] = [
       { name: "All Blogs", path: "/blogs", pro: false },
       { name: "Blog Category", path: "/category", pro: false },
     ],
+  },
+
+  {
+    icon: <PieChartIcon />,
+    name: "FAQS",
+    subItems: [
+      { name: "All Faqs", path: "/faqs", pro: false },
+      { name: "Faq Category", path: "/faqcategory", pro: false },
+    ],
+  },
+  {
+    icon: <NavigationIcon />,
+    name: "Navigation",
+    path: "/navigation",
+
   },
 
   {

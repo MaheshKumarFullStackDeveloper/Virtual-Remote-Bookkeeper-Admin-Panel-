@@ -27,7 +27,7 @@ export default function EditBlog() {
   const [updateLoading, setupdateLoading] = useState(false);
   const [AddUpadateBlog] = useAddUpadateBlogMutation()
   const [alerts, setAlerts] = useState<AlertProps[] | null>(null);
-  const { data: apiCateResponse = {} } = useGetCategorysQuery({ page: 1, limit: 10 })
+  const { data: apiCateResponse = {} } = useGetCategorysQuery({ page: 1, limit: 100 })
   const { data: apiBlogResponse = {} } = useGetBlogBySlugQuery(slug)
   useEffect(() => {
 

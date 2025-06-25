@@ -47,6 +47,43 @@ export interface Page {
   pageId?: string;
   sections?: Sections[];
 }
+export interface Faq {
+  _id: string;
+  faqId: string;
+  title: string;
+  content: string;
+  categories?: Category[];
+}
+export interface Menu {
+  _id: string;
+  menuId: string;
+  title: string;
+  items?: Item[];
+}
+export interface DeleteMenuParams {
+  menuId: string;
+  type: string;
+}
+export interface Item {
+  _id: string;
+  parent?: string;
+  itemId: string;
+  title: string;
+  link: string;
+  order?: number;
+  menu?: string;
+  children?: ChildItem[];
+}
+export interface ChildItem {
+  _id: string;
+  itemId: string;
+  parent?: string;
+  title: string;
+  link: string;
+  order?: number;
+  menu?: string;
+}
+
 export interface Blog {
   _id: string;
   blogId: string;

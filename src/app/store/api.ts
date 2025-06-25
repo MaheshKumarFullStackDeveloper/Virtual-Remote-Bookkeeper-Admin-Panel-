@@ -46,6 +46,26 @@ const API_URLS = {
    GET_CATEGORY_BY_SLUG: (slug: string) => `${BASE_URL}/category/${slug}`,
    DELETE_CATEGORY_BY_ID: (id: string) => `${BASE_URL}/category/${id}`,
 
+   //Blog related URL
+   FAQ: `${BASE_URL}/faq`,
+   GET_FAQS: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/faq/${page}/${limit}`,
+   GET_FAQ_BY_ID: (id: string) => `${BASE_URL}/faq/${id}`,
+   DELETE_FAQ_BY_ID: (id: string) => `${BASE_URL}/faq/${id}`,
+
+   //Category related URL CATEGORY
+   FAQCATEGORY: `${BASE_URL}/faqcategory`,
+   GET_FAQCATEGORYS: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/faqcategory/${page}/${limit}`,
+   GET_FAQCATEGORY_BY_SLUG: (slug: string) => `${BASE_URL}/faqcategory/${slug}`,
+   DELETE_FAQCATEGORY_BY_ID: (id: string) => `${BASE_URL}/faqcategory/${id}`,
+
+   //Navigation related URL CATEGORY
+   MENU: `${BASE_URL}/navigation/menu`,
+   GET_MENU: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/navigation/menu/${page}/${limit}`,
+   DELETE_MENU_BY_ID: (menuId: string) => `${BASE_URL}/navigation/menu/${menuId}`,
+   ITEM: `${BASE_URL}/navigation/item`,
+   DELETE_ITEM_BY_ID: (itemId: string) => `${BASE_URL}/navigation/item/${itemId}`,
+   ALLMENUITEM: `${BASE_URL}/navigation/menuwithitem`,
+
    //Section related URL
    SECTION: `${BASE_URL}/section`,
    GET_SECTIONS_BY_PAGE_ID: (pageId: string) => `${BASE_URL}/section/${pageId}`,
@@ -60,7 +80,7 @@ export const api = createApi({
       baseUrl: BASE_URL,
       credentials: 'include'
    }),
-   tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category'],
+   tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu'],
    endpoints: (builder) => ({
       //User end pint
       register: builder.mutation({
@@ -176,7 +196,7 @@ export const api = createApi({
       }),
 
 
-      //blogs Endpoint Query
+      //Category Endpoint Query
       addUpadateCategory: builder.mutation({
          query: (categoryData) => ({
             url: API_URLS.CATEGORY,
@@ -199,6 +219,100 @@ export const api = createApi({
       getCategoryBySlug: builder.query({
          query: (slug) => API_URLS.GET_CATEGORY_BY_SLUG(slug),
          providesTags: ["Category"]
+      }),
+
+
+      //Faq Endpoint Query
+      addUpadatefaq: builder.mutation({
+         query: (faqData) => ({
+            url: API_URLS.FAQ,
+            method: "POST",
+            body: faqData
+         }),
+         invalidatesTags: ["Faq"]
+      }),
+      deleteFaqById: builder.mutation({
+         query: (faqId) => ({
+            url: API_URLS.DELETE_FAQ_BY_ID(faqId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Faq"]
+      }),
+      getFAQs: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_FAQS({ page, limit }),
+         providesTags: ["Faq"]
+      }),
+      getFaqById: builder.query({
+         query: (id) => API_URLS.GET_FAQ_BY_ID(id),
+         providesTags: ["Faq"]
+      }),
+
+
+      //Faq Category Endpoint Query
+      addUpadateFaqcategory: builder.mutation({
+         query: (categoryData) => ({
+            url: API_URLS.FAQCATEGORY,
+            method: "POST",
+            body: categoryData
+         }),
+         invalidatesTags: ["Faqcategory"]
+      }),
+      deleteFaqcategoryById: builder.mutation({
+         query: (categoryId) => ({
+            url: API_URLS.DELETE_FAQCATEGORY_BY_ID(categoryId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Faqcategory"]
+      }),
+      getFaqcategorys: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_FAQCATEGORYS({ page, limit }),
+         providesTags: ["Faqcategory"]
+      }),
+      getFaqcategoryBySlug: builder.query({
+         query: (slug) => API_URLS.GET_FAQCATEGORY_BY_SLUG(slug),
+         providesTags: ["Faqcategory"]
+      }),
+
+
+
+      //Navigation Endpoint Query
+      addUpadateMenu: builder.mutation({
+         query: (menuData) => ({
+            url: API_URLS.MENU,
+            method: "POST",
+            body: menuData
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      deleteMenuById: builder.mutation({
+         query: (menuId) => ({
+            url: API_URLS.DELETE_MENU_BY_ID(menuId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      getMenus: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_MENU({ page, limit }),
+         providesTags: ["Menu"]
+      }),
+      addUpadateItem: builder.mutation({
+         query: (itemData) => ({
+            url: API_URLS.ITEM,
+            method: "POST",
+            body: itemData
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      deleteItemById: builder.mutation({
+         query: (itemId) => ({
+            url: API_URLS.DELETE_ITEM_BY_ID(itemId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Menu"]
+      }),
+      getAllMenusAndAllItems: builder.query({
+         query: () => API_URLS.ALLMENUITEM,
+         providesTags: ["Menu"]
       }),
 
 
@@ -274,6 +388,16 @@ export const {
    useGetImageByUserIdQuery,
    useGetImagesQuery,
 
+   useAddUpadateFaqcategoryMutation,
+   useDeleteFaqcategoryByIdMutation,
+   useGetFaqcategoryBySlugQuery,
+   useGetFaqcategorysQuery,
+
+   useAddUpadatefaqMutation,
+   useDeleteFaqByIdMutation,
+   useGetFaqByIdQuery,
+   useGetFAQsQuery,
+
    useAddUpadateCategoryMutation,
    useDeleteCategoryByIdMutation,
    useGetCategoryBySlugQuery,
@@ -283,6 +407,13 @@ export const {
    useDeleteBlogByIdMutation,
    useGetBlogBySlugQuery,
    useGetBlogsQuery,
+
+   useAddUpadateMenuMutation,
+   useDeleteMenuByIdMutation,
+   useGetMenusQuery,
+   useAddUpadateItemMutation,
+   useDeleteItemByIdMutation,
+   useGetAllMenusAndAllItemsQuery,
 
    useAddUpadatePageMutation,
    useDeletePageByIdMutation,
