@@ -40,7 +40,7 @@ export default function ThreeColumnImageGrid() {
 
       if (result.success) {
         toast.success("Delete image successfully", { position: 'bottom-center' })
-        console.log("Thisis delete result", result)
+        console.log("This is delete result", result)
       }
 
     } catch (error) {

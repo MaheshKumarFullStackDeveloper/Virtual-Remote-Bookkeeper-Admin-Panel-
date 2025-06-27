@@ -13,9 +13,10 @@ import {
   PageIcon,
   PieChartIcon,
   TableIcon,
+  TaskIcon,
   UserCircleIcon,
 } from "../icons/index";
-import { NavigationIcon } from "lucide-react";
+import { ImageIcon, MessageCircle, NavigationIcon } from "lucide-react";
 
 
 type NavItem = {
@@ -34,7 +35,7 @@ const navItems: NavItem[] = [
   {
     name: "Images",
     path: "/images",
-    icon: <PageIcon />,
+    icon: <ImageIcon />,
 
   },
   {
@@ -54,12 +55,18 @@ const navItems: NavItem[] = [
   },
 
   {
-    icon: <PieChartIcon />,
+    icon: <MessageCircle />,
     name: "FAQS",
     subItems: [
       { name: "All Faqs", path: "/faqs", pro: false },
       { name: "Faq Category", path: "/faqcategory", pro: false },
     ],
+  },
+
+  {
+    icon: <TaskIcon />,
+    name: "Widgets",
+    path: "/widget",
   },
   {
     icon: <NavigationIcon />,

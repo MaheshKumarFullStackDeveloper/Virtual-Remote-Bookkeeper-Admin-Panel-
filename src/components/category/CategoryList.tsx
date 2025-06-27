@@ -69,7 +69,7 @@ export default function CategoryList() {
 
       if (result.success) {
         toast.success("Delete page successfully", { position: 'bottom-center' })
-        console.log("Thisis delete result", result)
+        console.log("This is delete result", result)
       }
 
     } catch (error) {

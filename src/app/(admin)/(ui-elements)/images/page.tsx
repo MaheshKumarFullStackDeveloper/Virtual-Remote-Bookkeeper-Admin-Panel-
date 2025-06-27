@@ -9,21 +9,21 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: " Images",
-  description: 
+  description:
     " Images "
 };
 export default function Images() {
 
   return (
     <div>
-        
+
       <PageBreadcrumb pageTitle="Images" />
       <div className="space-y-5 sm:space-y-6">
-       
+
         <ComponentCard title="Uploade Images">
-         <ImageUpload/>
+          <ImageUpload />
         </ComponentCard>
-        <ComponentCard title="Image in 3 Grid">
+        <ComponentCard title="All Images">
           <ThreeColumnImageGrid />
         </ComponentCard>
       </div>

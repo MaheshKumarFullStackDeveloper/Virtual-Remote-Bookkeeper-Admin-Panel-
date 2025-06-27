@@ -1,16 +1,26 @@
+"use client";
+import { RootState } from "@/app/store/store";
 import GridShape from "@/components/common/GridShape";
 import ThemeTogglerTwo from "@/components/common/ThemeTogglerTwo";
 
 import { ThemeProvider } from "@/context/ThemeContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+  const router = useRouter();
+  const user = useSelector((state: RootState) => state?.user?.user);
+  if (user) {
+    router.push('/');
+  }
   return (
     <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
       <ThemeProvider>
@@ -27,9 +37,9 @@ export default function AuthLayout({
                     height={48}
                     src="/images/virtualremote-loader.jpg"
                     alt="Logo"
-                  /> 
+                  />
                 </Link>
-               
+
               </div>
             </div>
           </div>

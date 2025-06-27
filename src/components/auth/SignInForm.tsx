@@ -26,6 +26,7 @@ export default function SignInForm() {
   const user = useSelector((state: RootState) => state?.user?.user);
   const dispatch = useDispatch();
   const [login] = useLoginMutation()
+
   const {
     register: registerLogin,
     handleSubmit: handleLoginSubmit,
@@ -37,14 +38,14 @@ export default function SignInForm() {
     try {
       const { email, password } = data;
       const result = await login({ email, password }).unwrap();
-      localStorage.setItem("accessToken", result.data.accessToken);
 
       console.log("this is login result", result)
       if (result.success) {
-        toast.success("Login successfully")
+        //  toast.success("Login successfully")
+        localStorage.setItem("accessToken", result.data.accessToken);
 
-        dispatch(authStatus())
-        window.location.reload();
+        await dispatch(authStatus())
+        router.push("/");
 
       }
 
@@ -61,7 +62,7 @@ export default function SignInForm() {
       router.push('/');
 
     }
-  }, []);
+  });
 
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">

@@ -47,6 +47,12 @@ export interface Page {
   pageId?: string;
   sections?: Sections[];
 }
+export interface Widget {
+  _id: string;
+  widgetId: string;
+  title: string;
+  content: string;
+}
 export interface Faq {
   _id: string;
   faqId: string;

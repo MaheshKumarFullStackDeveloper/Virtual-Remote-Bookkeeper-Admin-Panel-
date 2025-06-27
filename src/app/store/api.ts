@@ -30,13 +30,29 @@ const API_URLS = {
 
    //Page related URL
    PAGE: `${BASE_URL}/page`,
-   GET_PAGES: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/page/${page}/${limit}`,
+
+   GET_PAGES: ({ page, limit, search }: { page: number; limit: number; search: string }) => {
+      let url = `/page?page=${page}&limit=${limit}`;
+      if (search) {
+         url += `&search=${encodeURIComponent(search)}`;
+      }
+      console.log("get all page", url);
+      return url;
+   },
    GET_PAGE_BY_SLUG: (slug: string) => `${BASE_URL}/page/${slug}`,
    DELETE_PAGES_BY_ID: (id: string) => `${BASE_URL}/page/${id}`,
 
    //Blog related URL
    BLOG: `${BASE_URL}/blog`,
-   GET_BLOGS: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/blog/${page}/${limit}`,
+   GET_BLOGS: ({ page, limit, search }: { page: number; limit: number; search: string }) => {
+      let url = `/blog?page=${page}&limit=${limit}`;
+      if (search) {
+         url += `&search=${encodeURIComponent(search)}`;
+      }
+
+      return url;
+   },
+
    GET_BLOG_BY_SLUG: (slug: string) => `${BASE_URL}/blog/${slug}`,
    DELETE_BLOG_BY_ID: (id: string) => `${BASE_URL}/blog/${id}`,
 
@@ -46,9 +62,21 @@ const API_URLS = {
    GET_CATEGORY_BY_SLUG: (slug: string) => `${BASE_URL}/category/${slug}`,
    DELETE_CATEGORY_BY_ID: (id: string) => `${BASE_URL}/category/${id}`,
 
-   //Blog related URL
+   //Faqs related URL
+   WIDGET: `${BASE_URL}/widget`,
+   GET_WIDGETS: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/widget/${page}/${limit}`,
+   DELETE_WIDGET_BY_ID: (id: string) => `${BASE_URL}/widget/${id}`,
+
+   //Faqs related URL
    FAQ: `${BASE_URL}/faq`,
-   GET_FAQS: ({ page, limit }: { page: number; limit: number }) => `${BASE_URL}/faq/${page}/${limit}`,
+   GET_FAQS: ({ page, limit, search }: { page: number; limit: number; search: string }) => {
+      let url = `/faq?page=${page}&limit=${limit}`;
+      if (search) {
+         url += `&search=${encodeURIComponent(search)}`;
+      }
+      console.log("get all faqs", url);
+      return url;
+   },
    GET_FAQ_BY_ID: (id: string) => `${BASE_URL}/faq/${id}`,
    DELETE_FAQ_BY_ID: (id: string) => `${BASE_URL}/faq/${id}`,
 
@@ -87,7 +115,7 @@ export const api = createApi({
       }
 
    }),
-   tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu'],
+   tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu', 'Widget'],
    endpoints: (builder) => ({
       //User end pint
       register: builder.mutation({
@@ -177,6 +205,29 @@ export const api = createApi({
       }),
 
 
+      //Widget Endpoint Query
+      uploadWidget: builder.mutation({
+         query: (imageData) => ({
+            url: API_URLS.WIDGET,
+            method: "POST",
+            body: imageData
+         }),
+         invalidatesTags: ["Widget"]
+      }),
+      deleteWidgetById: builder.mutation({
+         query: (widgetId) => ({
+            url: API_URLS.DELETE_WIDGET_BY_ID(widgetId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["Widget"]
+      }),
+      getWidgets: builder.query({
+         query: ({ page, limit }) => API_URLS.GET_WIDGETS({ page, limit }),
+         providesTags: ["Widget"]
+      }),
+
+
+
       //blogs Endpoint Query
       addUpadateBlog: builder.mutation({
          query: (blogData) => ({
@@ -194,9 +245,11 @@ export const api = createApi({
          invalidatesTags: ["Blog"]
       }),
       getBlogs: builder.query({
-         query: ({ page, limit }) => API_URLS.GET_BLOGS({ page, limit }),
-         providesTags: ["Blog"]
+         query: ({ page, limit, search }) =>
+            API_URLS.GET_BLOGS({ page, limit, search }),
+         providesTags: ["Blog"],
       }),
+
       getBlogBySlug: builder.query({
          query: (slug) => API_URLS.GET_BLOG_BY_SLUG(slug),
          providesTags: ["Blog"]
@@ -245,9 +298,11 @@ export const api = createApi({
          }),
          invalidatesTags: ["Faq"]
       }),
+
       getFAQs: builder.query({
-         query: ({ page, limit }) => API_URLS.GET_FAQS({ page, limit }),
-         providesTags: ["Faq"]
+         query: ({ page, limit, search }) =>
+            API_URLS.GET_FAQS({ page, limit, search }),
+         providesTags: ["Faq"],
       }),
       getFaqById: builder.query({
          query: (id) => API_URLS.GET_FAQ_BY_ID(id),
@@ -341,7 +396,7 @@ export const api = createApi({
          invalidatesTags: ["Page"]
       }),
       getPages: builder.query({
-         query: ({ page, limit }) => API_URLS.GET_PAGES({ page, limit }),
+         query: ({ page, limit, search }) => API_URLS.GET_PAGES({ page, limit, search }),
          providesTags: ["Page"]
       }),
       getPageBySlug: builder.query({
@@ -394,6 +449,10 @@ export const {
    useDeleteImageByIdMutation,
    useGetImageByUserIdQuery,
    useGetImagesQuery,
+
+   useGetWidgetsQuery,
+   useUploadWidgetMutation,
+   useDeleteWidgetByIdMutation,
 
    useAddUpadateFaqcategoryMutation,
    useDeleteFaqcategoryByIdMutation,

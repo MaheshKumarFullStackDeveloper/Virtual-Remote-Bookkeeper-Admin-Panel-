@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -27,24 +27,36 @@ export default function BlogsList() {
   const [totalBlog, setTotalBlog] = useState<number>(1)
 
   const limit = 10;
-  const { data: apiResponse = {} } = useGetBlogsQuery({ page: currentPagen, limit: limit })
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+
+  const queryParams = useMemo(() => ({
+    page: currentPagen,
+    limit,
+    search: searchTerm
+  }), [currentPagen, limit, searchTerm]);
+
+  const { data: apiResponse = {}, isFetching, refetch } = useGetBlogsQuery(queryParams);
   const [deleteBlogById] = useDeleteBlogByIdMutation()
+
   useEffect(() => {
-    if (apiResponse.success) {
-      setBlogs(apiResponse.data.blogsList)
-      setTotalBlog(apiResponse.data.totalBlogs)
+    if (apiResponse?.success) {
+      const { blogsList, totalBlogs, totalBlogsCount } = apiResponse.data;
+      setBlogs(blogsList);
+      setTotalBlog(totalBlogs);
 
       const from = (currentPagen - 1) * limit + 1;
-      const topge = Math.min(currentPagen * limit, apiResponse.data.totalBlogsCount);
+      const to = Math.min(currentPagen * limit, totalBlogsCount);
 
-
-      setToFrom(`Total Blogs : ${apiResponse.data.totalBlogsCount}, show ${from} to ${topge} `);
+      setToFrom(`Total Blogs : ${totalBlogsCount}, show ${from} to ${to}`);
     }
-    console.log("all Blogs", blogs)
-  }, [apiResponse, currentPagen, toFrom, limit])
+  }, [apiResponse]);
+
 
   const handleBlogChange = (page: number) => {
     setCurrentBlogn(page);
+    refetch(); // optional, in case caching is aggressive
+
   };
 
   const handleDeleteBlog = async (blogId: string) => {
@@ -73,86 +85,115 @@ export default function BlogsList() {
   return (
     <>
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+
+        {/*--------------- Search  form ---------------- */}
         <div className="max-w-full overflow-x-auto">
           <div className="min-w-[1102px]">
-            {blogs && blogs.length > 0 ? (<>
-              <Table>
-                {/* Table Header */}
+            <div className="flex float-right items-center justify-between px-4 py-3">
+              <input
+                type="text"
+                placeholder="Search by title or content..."
+                className="w-full max-w-md px-4 py-2 border rounded-md focus:outline-none focus:ring dark:bg-transparent dark:border-white/20"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentBlogn(1); // reset to first page on new search
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        {/*--------------- Search  form ---------------- */}
 
-                <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-                  <TableRow>
 
-                    <TableCell
-                      isHeader
-                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                      Title
-                    </TableCell>
-                    <TableCell
-                      isHeader
-                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                      Slug
-                    </TableCell>
+        <div className="max-w-full overflow-x-auto">
+          <div className="min-w-[1102px]">
+            {isFetching ? (
+              <div className="text-center py-6">
+                <span className="animate-spin inline-block w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full"></span>
+                <p className="mt-2 text-sm text-gray-500">Loading blogs...</p>
+              </div>
+            ) : (<>
 
-                    <TableCell
-                      isHeader
-                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                      Status
-                    </TableCell>
-                    <TableCell
-                      isHeader
-                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                    >
-                      Action
-                    </TableCell>
-                  </TableRow>
-                </TableHeader>
+              {blogs && blogs.length > 0 ? (<>
+                <Table>
+                  {/* Table Header */}
 
-                {/* Table Body */}
-                <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                  {blogs.map((blog, index) => (
-                    <TableRow key={index}>
+                  <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
+                    <TableRow>
 
-                      <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {blog.title}
+                      <TableCell
+                        isHeader
+                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                      >
+                        Title
+                      </TableCell>
+                      <TableCell
+                        isHeader
+                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                      >
+                        Slug
                       </TableCell>
 
-                      <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {blog.slug}
+                      <TableCell
+                        isHeader
+                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                      >
+                        Status
                       </TableCell>
-
-                      <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        <Badge
-                          size="sm"
-                          color={
-                            blog.status === "active"
-                              ? "success"
-                              : blog.status === "pending"
-                                ? "warning"
-                                : "error"
-                          }
-                        >
-                          {blog.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                        <TrashIcon onClick={() => handleDeleteBlog(blog._id)} className=" h-8 w-8  p-2  text-red-500 float-left gap-1 rounded-full font-medium" />
-                        <Link href={`/blogs/${blog.slug}`} ><EditIcon className=" h-8 w-8  p-2  text-green-500 float-left gap-1 rounded-full font-medium" /></Link>
+                      <TableCell
+                        isHeader
+                        className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                      >
+                        Action
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
 
-              <div className="px-6 py-5 flex flex-row w-[100%] relative">
-                <div className="basis-1/2">
-                  <h3 className="text-base font-medium text-gray-800 dark:text-white/90">{toFrom}</h3> </div>
-                <div className="basis-1/2 text-right"><Pagination currentPage={currentPagen} totalPages={totalBlog} onPageChange={handleBlogChange} /></div>
-              </div>
+                  {/* Table Body */}
+                  <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                    {blogs.map((blog, index) => (
+                      <TableRow key={index}>
 
-            </>) : (<><h3> Blog not found</h3></>)}
+                        <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                          {blog.title}
+                        </TableCell>
+
+                        <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                          {blog.slug}
+                        </TableCell>
+
+                        <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                          <Badge
+                            size="sm"
+                            color={
+                              blog.status === "active"
+                                ? "success"
+                                : blog.status === "pending"
+                                  ? "warning"
+                                  : "error"
+                            }
+                          >
+                            {blog.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                          <TrashIcon onClick={() => handleDeleteBlog(blog._id)} className=" h-8 w-8  p-2  text-red-500 float-left gap-1 rounded-full font-medium" />
+                          <Link href={`/blogs/${blog.slug}`} ><EditIcon className=" h-8 w-8  p-2  text-green-500 float-left gap-1 rounded-full font-medium" /></Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+
+                <div className="px-6 py-5 flex flex-row w-[100%] relative">
+                  <div className="basis-1/2">
+                    <h3 className="text-base font-medium text-gray-800 dark:text-white/90">{toFrom}</h3> </div>
+                  <div className="basis-1/2 text-right"><Pagination currentPage={currentPagen} totalPages={totalBlog} onPageChange={handleBlogChange} /></div>
+                </div>
+
+              </>) : (<><h3> Blog not found</h3></>)}
+            </>)}
           </div>
         </div>
       </div>
