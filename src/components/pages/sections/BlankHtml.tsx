@@ -56,7 +56,7 @@ export default function BlankHtml({ selectedSection, sectionValue, updateSection
       setValue("description", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: BlankHtml) => {
     setupdateLoading(true);

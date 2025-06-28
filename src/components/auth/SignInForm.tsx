@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 
 import { EyeCloseIcon, EyeIcon, LockIcon, MailIcon } from "@/icons";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import toast, { LoaderIcon } from "react-hot-toast";
-import { authStatus } from "@/app/store/slice/userSlice";
+import { setAccessToken } from "@/app/store/slice/userSlice";
 import { useRouter } from "next/navigation";
-import { RootState } from "@/app/store/store";
 export default function SignInForm() {
 
   const router = useRouter();
@@ -23,10 +22,8 @@ export default function SignInForm() {
   }
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
-  const user = useSelector((state: RootState) => state?.user?.user);
   const dispatch = useDispatch();
   const [login] = useLoginMutation()
-
   const {
     register: registerLogin,
     handleSubmit: handleLoginSubmit,
@@ -41,11 +38,12 @@ export default function SignInForm() {
 
       console.log("this is login result", result)
       if (result.success) {
-        //  toast.success("Login successfully")
-        localStorage.setItem("accessToken", result.data.accessToken);
+        toast.success("Login successfully")
 
-        await dispatch(authStatus())
+        await dispatch(setAccessToken(result.data.accessToken))
         router.push("/");
+
+
 
       }
 
@@ -57,12 +55,7 @@ export default function SignInForm() {
     }
   }
 
-  useEffect(() => {
-    if (user) {
-      router.push('/');
 
-    }
-  });
 
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">

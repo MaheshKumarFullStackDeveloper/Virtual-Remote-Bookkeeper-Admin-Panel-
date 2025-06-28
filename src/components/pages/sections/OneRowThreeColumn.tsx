@@ -67,7 +67,7 @@ export default function OneRowThreeColumn({ selectedSection, sectionValue, updat
       setValue("description3", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: OneRowThreeColumn) => {
     setupdateLoading(true);

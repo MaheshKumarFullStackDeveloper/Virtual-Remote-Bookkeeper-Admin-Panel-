@@ -32,7 +32,7 @@ export default function AddFaq() {
       console.log("load cat", categories);
 
     }
-  }, [apiResponse]);
+  }, [apiResponse, categories]);
 
   const {
     register: registerUpdate,

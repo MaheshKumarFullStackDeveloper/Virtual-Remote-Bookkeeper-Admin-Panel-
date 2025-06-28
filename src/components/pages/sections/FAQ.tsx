@@ -55,7 +55,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
       setValue("categorySlug", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: FAQ) => {
     setupdateLoading(true);

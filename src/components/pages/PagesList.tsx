@@ -57,7 +57,7 @@ export default function PagesList() {
 
       setToFrom(`Total Pages : ${totalPagesCount}, show ${from} to ${to}`);
     }
-  }, [apiResponse]);
+  }, [apiResponse, currentPagen]);
 
   const [deletePageById] = useDeletePageByIdMutation()
 

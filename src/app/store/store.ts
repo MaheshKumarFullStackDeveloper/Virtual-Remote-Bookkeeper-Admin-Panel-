@@ -25,7 +25,8 @@ const storage = typeof window !== 'undefined'
 const persistConfig = {
   key: "user",
   storage,
-  whitelist: ['user', 'isLoginDialogOpen', 'isLoggedIn'] // Note the lowercase "whitelist"
+  whitelist: ['user', 'isLoginDialogOpen', 'accessToken'], // Note the lowercase "whitelist"
+
 };
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);

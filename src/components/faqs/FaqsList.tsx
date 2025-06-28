@@ -63,7 +63,7 @@ export default function FaqsList() {
 
       setToFrom(`Total Faqs : ${totalFaqsCount}, show ${from} to ${to}`);
     }
-  }, [apiResponse]);
+  }, [apiResponse, currentFaqn]);
 
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function FaqsList() {
       console.log("load cat", categories);
 
     }
-  }, [apiCateResponse]);
+  }, [apiCateResponse, categories]);
 
 
 

@@ -64,7 +64,7 @@ export default function LeftSideTextRightSideImageWithButton({ selectedSection, 
       setValue("image", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: LeftSideTextRightSideImageWithButton) => {
     setupdateLoading(true);

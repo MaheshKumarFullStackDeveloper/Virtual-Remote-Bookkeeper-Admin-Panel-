@@ -29,6 +29,13 @@ export default function EditBlog() {
   const [alerts, setAlerts] = useState<AlertProps[] | null>(null);
   const { data: apiCateResponse = {} } = useGetCategorysQuery({ page: 1, limit: 100 })
   const { data: apiBlogResponse = {} } = useGetBlogBySlugQuery(slug)
+  const {
+    register: registerUpdate,
+    handleSubmit: handleUpdateSubmit,
+    control,
+    setValue,
+    formState: { errors: UpdateError },
+  } = useForm<Blog>({});
   useEffect(() => {
 
     if (apiBlogResponse.success) {
@@ -48,7 +55,7 @@ export default function EditBlog() {
       console.log("load blog", categories);
 
     }
-  }, [apiBlogResponse]);
+  }, [apiBlogResponse, categories, setValue]);
 
   useEffect(() => {
     if (apiCateResponse.success) {
@@ -56,15 +63,9 @@ export default function EditBlog() {
       console.log("load cat", categories);
 
     }
-  }, [apiCateResponse]);
+  }, [apiCateResponse, categories]);
 
-  const {
-    register: registerUpdate,
-    handleSubmit: handleUpdateSubmit,
-    control,
-    setValue,
-    formState: { errors: UpdateError },
-  } = useForm<Blog>({});
+
 
   const onSubmitUpdate = async (data: Blog) => {
     setupdateLoading(true);

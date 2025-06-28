@@ -57,7 +57,7 @@ export default function AddEditItem({ reloadMenu, resetAddEditItem, sectionMenu,
     if (sectionMenu !== null) {
       openModal();
     }
-  }, [sectionMenu]); // Runs whenever selectedSection changes
+  }, [sectionMenu, editItem, openModal, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: Item) => {
     setupdateLoading(true);

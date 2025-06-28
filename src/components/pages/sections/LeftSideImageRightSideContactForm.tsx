@@ -54,7 +54,7 @@ export default function LeftSideImageRightSideContactForm({ selectedSection, sec
       setValue("image", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: LeftSideImageRightSideContactForm) => {
     setupdateLoading(true);

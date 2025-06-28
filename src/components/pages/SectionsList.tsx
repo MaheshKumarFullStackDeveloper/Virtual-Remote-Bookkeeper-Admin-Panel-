@@ -81,9 +81,7 @@ export default function SectionsList() {
 
 
     }
-    console.log("Updated sections:", sections);
 
-    console.log("all Section", page._id)
   }, [apiResponse, page])
 
 

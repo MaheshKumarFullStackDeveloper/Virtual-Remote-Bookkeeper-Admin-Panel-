@@ -50,7 +50,7 @@ export default function BlogsList() {
 
       setToFrom(`Total Blogs : ${totalBlogsCount}, show ${from} to ${to}`);
     }
-  }, [apiResponse]);
+  }, [apiResponse, currentPagen]);
 
 
   const handleBlogChange = (page: number) => {

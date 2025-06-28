@@ -30,7 +30,7 @@ export default function ThreeColumnImageGrid() {
 
       setToFrom(`Total images : ${apiResponse.data.totalImages}, show ${from} to ${toimg} `);
     }
-    console.log("all images", images)
+
   }, [apiResponse, currentPagen, toFrom, limit])
 
   const handleDeleteImage = async (imageId: string) => {
@@ -72,7 +72,7 @@ export default function ThreeColumnImageGrid() {
                   width={338}
                   height={192}
                 /></Link>
-              <Trash2 onClick={() => handleDeleteImage(img._id)} className="absolute top-1 right-1 rounded-lg bg-red-500 px-2 py-1 text-2xl font-bold text-white flex flex-col " />
+              <Trash2 onClick={() => handleDeleteImage(img._id)} className="absolute cursor-pointer top-1 right-1 rounded-lg bg-gradient-to-b from-red-400 to-red-600 shadow-lg shadow-red-500/50 px-2 py-1 text-2xl font-bold text-white flex flex-col transform hover:scale-105 active:translate-y-1 " />
             </div>
           ))}
         </div>

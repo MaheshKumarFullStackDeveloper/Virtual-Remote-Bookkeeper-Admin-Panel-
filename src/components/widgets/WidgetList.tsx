@@ -46,7 +46,7 @@ export default function WidgetList() {
 
       setToFrom(`Total Widgets : ${apiResponse.data.totalWidgetsCount}, show 1 to ${topge} `);
     }
-    console.log("all Widgets", widgets)
+
   }, [apiResponse, toFrom, limit])
 
 

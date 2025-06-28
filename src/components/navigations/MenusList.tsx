@@ -50,7 +50,6 @@ export default function MenuList() {
 
     }
     setRefreshMenu(null);
-    console.log("all Menu", menus)
   }, [apiAllmenuResponse, refreshMenu])
 
 

@@ -84,7 +84,7 @@ export default function OneRowTwoColumn({ selectedSection, sectionValue, updateS
       setValue("mainButtonUrl", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: OneRowTwoColumn) => {
     setupdateLoading(true);

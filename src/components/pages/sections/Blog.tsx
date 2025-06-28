@@ -59,7 +59,7 @@ export default function Blog({ selectedSection, sectionValue, updateSections, up
       setValue("categorySlug", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: Blog) => {
     setupdateLoading(true);

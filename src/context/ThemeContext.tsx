@@ -40,7 +40,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         document.documentElement.classList.remove("dark");
       }
-    } 
+    }
   }, [theme, isInitialized]);
 
   const toggleTheme = () => {
@@ -48,17 +48,17 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-      <Provider store={store} >
-         <Toaster/> 
-          <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-           
-            <AuthCheck> 
-              <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                  {children}
-              </ThemeContext.Provider>
-          </AuthCheck>
-          </PersistGate>
-   </Provider>
+    <Provider store={store} >
+      <Toaster />
+      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+
+        <AuthCheck>
+          <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+          </ThemeContext.Provider>
+        </AuthCheck>
+      </PersistGate>
+    </Provider>
   );
 };
 

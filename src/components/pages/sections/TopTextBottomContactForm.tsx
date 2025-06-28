@@ -55,7 +55,7 @@ export default function TopTextBottomContactForm({ selectedSection, sectionValue
       setValue("description", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: TopTextBottomContactForm) => {
     setupdateLoading(true);

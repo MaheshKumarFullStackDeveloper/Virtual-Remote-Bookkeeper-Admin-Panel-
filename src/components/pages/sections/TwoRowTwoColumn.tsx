@@ -101,7 +101,7 @@ export default function TwoRowTwoColumn({ selectedSection, sectionValue, updateS
       setValue("description4", "")
     }
     openModal();
-  }, [selectedSection]); // Runs whenever selectedSection changes
+  }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
   const onSubmitUpdate = async (data: TwoRowTwoColumn) => {
     setupdateLoading(true);

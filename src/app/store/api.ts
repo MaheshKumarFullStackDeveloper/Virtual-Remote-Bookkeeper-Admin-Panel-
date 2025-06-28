@@ -1,6 +1,8 @@
 
 import { fetchBaseQuery } from "@reduxjs/toolkit/query"
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { RootState } from "./store";
+import { logout } from "./slice/userSlice";
 
 
 
@@ -104,17 +106,28 @@ const API_URLS = {
 
 
 export const api = createApi({
-   baseQuery: fetchBaseQuery({
-      baseUrl: BASE_URL,
-      prepareHeaders: (headers) => {
-         const token = localStorage.getItem("accessToken");
-         if (token) {
-            headers.set("Authorization", `Bearer ${token}`);
+   baseQuery: async (args, api, extraOptions) => {
+      const baseQuery = fetchBaseQuery({
+         baseUrl: BASE_URL,
+         prepareHeaders: (headers, { getState }) => {
+            const accessToken = (getState() as RootState)?.user?.accessToken;
+            if (accessToken) {
+               headers.set("Authorization", `Bearer ${accessToken}`);
+            }
+            return headers;
          }
-         return headers;
+      });
+
+      const result = await baseQuery(args, api, extraOptions);
+
+
+      if (result.error?.status === 434) {
+         api.dispatch(logout()); // Dispatch logout action
       }
 
-   }),
+      return result;
+   },
+
    tagTypes: ['user', 'Address', 'Product', 'Image', 'Page', 'Section', 'Blog', 'Category', 'Faq', 'Faqcategory', 'Menu', 'Widget'],
    endpoints: (builder) => ({
       //User end pint

@@ -32,7 +32,7 @@ export default function AddBlog() {
       console.log("load cat", categories);
 
     }
-  }, [apiResponse]);
+  }, [apiResponse, categories]);
 
   const {
     register: registerUpdate,

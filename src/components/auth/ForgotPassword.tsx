@@ -1,23 +1,18 @@
 "use client";
 import { useForgotPasswordMutation } from "@/app/store/api";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Loader2, Mail } from "lucide-react";
 import { MotionConfig } from "framer-motion";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { RootState } from "@/app/store/store";
 interface ForgotPasswordFormData {
   email: string;
 }
 export default function ForgotPassword() {
 
-  const router = useRouter();
-  const user = useSelector((state: RootState) => state?.user?.user);
   const [forgetPasswordSuccess, setForgetPasswordSuccess] = useState(false);
   const [fogotPasswordLoading, setFogotPasswordLoading] = useState(false);
   const [forgotPassword] = useForgotPasswordMutation()
@@ -46,12 +41,6 @@ export default function ForgotPassword() {
     }
   }
 
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-
-    }
-  }, []);
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
 
