@@ -233,21 +233,14 @@ export default function Blog({ selectedSection, sectionValue, updateSections, up
 
 
                   <div className="col-span-1">
-                    <Label>categorySlug</Label>
+                    <Label>category Slug</Label>
 
                     <Textarea
-                      {...registerUpdate("categorySlug", {
-                        required: "categorySlug is required",
-                      })}
+                      {...registerUpdate("categorySlug")}
                       placeholder="categorySlug"
                       className="pl-10"
                     />
 
-                    {UpdateError.categorySlug && (
-                      <p className="text-red-700 text-sm">
-                        {UpdateError.categorySlug.message}
-                      </p>
-                    )}
 
 
                   </div>

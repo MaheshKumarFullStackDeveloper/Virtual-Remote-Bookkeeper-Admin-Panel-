@@ -20,14 +20,15 @@ type AddProps = {
   updateSelectedSection: () => void;
 };
 
-type FAQ = {
+type LeftSideContactFormtRightSideText = {
   heading: string;
-  categorySlug: string;
+  subHeading: string;
+  description: string;
   order: string;
 };
 
 
-export default function FAQ({ selectedSection, sectionValue, updateSections, updateSelectedSection }: AddProps): React.JSX.Element {
+export default function LeftSideContactFormtRightSideText({ selectedSection, sectionValue, updateSections, updateSelectedSection }: AddProps): React.JSX.Element {
   const [addUpadateSection] = useAddUpadateSectionMutation();
   const { isOpen, openModal, closeModal } = useModal();
   const [updateLoading, setupdateLoading] = useState(false);
@@ -38,7 +39,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
     handleSubmit: handleUpdateSubmit,
     setValue,
     formState: { errors: UpdateError },
-  } = useForm<FAQ>({});
+  } = useForm<LeftSideContactFormtRightSideText>({});
 
   useEffect(() => {
     console.log("selectedSection updated:", selectedSection);
@@ -49,23 +50,25 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
     if (sectionValue.content !== "") {
       const Details = JSON.parse(sectionValue.content);
       setValue("heading", Details.heading)
-      setValue("categorySlug", Details.categorySlug)
+      setValue("subHeading", Details.heading)
+      setValue("description", Details.description)
     } else {
       setValue("heading", "")
-      setValue("categorySlug", "")
+      setValue("subHeading", "")
+      setValue("description", "")
     }
     openModal();
   }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
-  const onSubmitUpdate = async (data: FAQ) => {
+  const onSubmitUpdate = async (data: LeftSideContactFormtRightSideText) => {
     setupdateLoading(true);
 
     try {
-      const { heading, categorySlug, order } = data;
+      const { heading, description, subHeading, order } = data;
 
-      const newContent = { "heading": heading, "categorySlug": categorySlug, }
+      const newContent = { "heading": heading, "description": description, "subHeading": subHeading }
       console.log("page updated:", sectionValue.page);
-      const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "FAQ", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
+      const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "LeftSideContactFormtRightSideText", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 
       if (result.success) {
         updateSections(result.data)
@@ -142,7 +145,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
           <form
             onChange={handleFormChange} onSubmit={handleUpdateSubmit(onSubmitUpdate)} className="flex flex-col">
             <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Update FAQ
+              Update Left Side Contact Formt Right Side Text
             </h4>
             <div className="custom-scrollbar h-[400px] overflow-y-auto px-2 pb-3">
 
@@ -206,21 +209,44 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
                   </div>
 
 
-
                   <div className="col-span-1">
-                    <Label>category Slug</Label>
+                    <Label>Sub Heading</Label>
 
-                    <Textarea
-                      {...registerUpdate("categorySlug", {
-                        required: "categorySlug is required",
+
+                    <Input
+                      {...registerUpdate("subHeading", {
+                        required: "Section sub heading is required",
                       })}
-                      placeholder="categorySlug"
+                      placeholder="sub heading"
+                      type="text"
+
                       className="pl-10"
                     />
 
-                    {UpdateError.categorySlug && (
+
+                    {UpdateError.subHeading && (
                       <p className="text-red-700 text-sm">
-                        {UpdateError.categorySlug.message}
+                        {UpdateError.subHeading.message}
+                      </p>
+                    )}
+                  </div>
+
+
+
+                  <div className="col-span-1">
+                    <Label>Description</Label>
+
+                    <Textarea
+                      {...registerUpdate("description", {
+                        required: "Description is required",
+                      })}
+                      placeholder="Description"
+                      className="pl-10"
+                    />
+
+                    {UpdateError.description && (
+                      <p className="text-red-700 text-sm">
+                        {UpdateError.description.message}
                       </p>
                     )}
 

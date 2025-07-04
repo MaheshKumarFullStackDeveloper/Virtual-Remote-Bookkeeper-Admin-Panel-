@@ -38,6 +38,12 @@ import TopTextBottomContactFormView from "./sectionsView/TopTextBottomContactFor
 import LeftSideImageRightSideTextView from "./sectionsView/LeftSideImageRightSideTextView";
 import FAQView from "./sectionsView/FAQView";
 import BlogView from "./sectionsView/BlogView";
+import PageBanner from "./sections/PageBanner";
+import PageBannerView from "./sectionsView/PageBannerView";
+import LeftSideTextRightSideContactFormView from "./sectionsView/LeftSideTextRightSideContactFormView";
+import LeftSideTextRightSideContactForm from "./sections/LeftSideTextRightSideContactForm";
+import LeftSideContactFormtRightSideText from "./sections/LeftSideContactFormtRightSideText";
+import LeftSideContactFormtRightSideTextView from "./sectionsView/LeftSideContactFormtRightSideTextView";
 
 
 
@@ -112,9 +118,12 @@ export default function SectionsList() {
 
 
   const options = [
-    { value: "BlankHtml", label: "Blank HTML", imgSrc: "/BlankHtml.png" },
+    { value: "BlankHtml", label: "Blank HTML", imgSrc: "/Html.png" },
+    { value: "PageBanner", label: "Page Banner", imgSrc: "/PageBanner.png" },
     { value: "Blog", label: "Blog", imgSrc: "/Blog.png" },
     { value: "LeftSideImageRightSideContactForm", label: "Left Side Image Right Side Contact Form", imgSrc: "/LeftSideImageRightSideContactForm.png" },
+    { value: "LeftSideContactFormtRightSideText", label: "Left Side Contact Formt Right Side Text", imgSrc: "/LeftSideContactFormtRightSideText.png" },
+    { value: "LeftSideTextRightSideContactForm", label: "Left Side Text Right Side Contact Form", imgSrc: "/LeftSideTextRightSideContactForm.png" },
     { value: "TopTextBottomContactForm", label: "Top Text Bottom Contact Form", imgSrc: "/TopTextBottomContactForm.png" },
     { value: "LeftSideTextRightSideImage", label: "Left Side Text Right Side Image", imgSrc: "/LeftSideTextRightSideImage.png" },
     { value: "LeftSideImageRightSideText", label: "Left Side Image Right SideText", imgSrc: "/LeftSideImageRightSideText.png" },
@@ -217,6 +226,9 @@ export default function SectionsList() {
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
 
                     {section.title === 'BlankHtml' ? (<BlankHtmlView content={section.content} />) : ""}
+                    {section.title === 'PageBanner' ? (<PageBannerView content={section.content} />) : ""}
+                    {section.title === 'LeftSideContactFormtRightSideText' ? (<LeftSideContactFormtRightSideTextView content={section.content} />) : ""}
+                    {section.title === 'LeftSideTextRightSideContactForm' ? (<LeftSideTextRightSideContactFormView content={section.content} />) : ""}
 
                     {section.title === 'LeftSideImageRightSideContactForm' ? (<LeftSideImageRightSideContactFormView content={section.content} />) : ""}
                     {section.title === 'LeftSideTextRightSideImage' ? (<LeftSideTextRightSideImageView content={section.content} />) : ""}
@@ -250,8 +262,10 @@ export default function SectionsList() {
 
 
       {selectedSection !== "" && selectedSection === "Blog" ? (<> <Blog updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
+      {selectedSection !== "" && selectedSection === "LeftSideContactFormtRightSideText" ? (<> <LeftSideContactFormtRightSideText updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
       {selectedSection !== "" && selectedSection === "FAQ" ? (<> <FAQ updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
       {selectedSection !== "" && selectedSection === "BlankHtml" ? (<> <BlankHtml updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
+      {selectedSection !== "" && selectedSection === "PageBanner" ? (<> <PageBanner updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
       {selectedSection !== "" && selectedSection === "LeftSideTextRightSideImage" ? (<> <LeftSideTextRightSideImage updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
 
       {selectedSection !== "" && selectedSection === "LeftSideImageRightSideText" ? (<> <LeftSideImageRightSideText updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
@@ -260,6 +274,7 @@ export default function SectionsList() {
 
       {selectedSection !== "" && selectedSection === "TwoRowTwoColumn" ? (<> <TwoRowTwoColumn updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
 
+      {selectedSection !== "" && selectedSection === "LeftSideTextRightSideContactForm" ? (<> <LeftSideTextRightSideContactForm updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
       {selectedSection !== "" && selectedSection === "LeftSideTextRightSideImageWithButton" ? (<> <LeftSideTextRightSideImageWithButton updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}
 
       {selectedSection !== "" && selectedSection === "OneRowThreeColumn" ? (<> <OneRowThreeColumn updateSections={updateSections} updateSelectedSection={updateSelectedSection} sectionValue={sectionValue} selectedSection={selectedSection} /></>) : ""}

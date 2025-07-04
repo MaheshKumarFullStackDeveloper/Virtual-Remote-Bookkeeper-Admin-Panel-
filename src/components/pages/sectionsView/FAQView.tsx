@@ -33,12 +33,14 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
 
       <div className="flex justify-center max-w-[1100px] item-center w-full m-auto p-2">
         <Image
-          src="/FaqView.png"
+          src={"/faqview.png"}
           width={725}
           height={352}
           alt="home-banner"
-          className="transition delay-150 m-0 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
+          className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
         ></Image>
+
+
       </div>
     </div>
   </>)

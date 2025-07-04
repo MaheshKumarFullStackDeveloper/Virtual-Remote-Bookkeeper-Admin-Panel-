@@ -20,14 +20,14 @@ type AddProps = {
   updateSelectedSection: () => void;
 };
 
-type FAQ = {
+type LeftSideTextRightSideContactForm = {
   heading: string;
-  categorySlug: string;
+  description: string;
   order: string;
 };
 
 
-export default function FAQ({ selectedSection, sectionValue, updateSections, updateSelectedSection }: AddProps): React.JSX.Element {
+export default function LeftSideTextRightSideContactForm({ selectedSection, sectionValue, updateSections, updateSelectedSection }: AddProps): React.JSX.Element {
   const [addUpadateSection] = useAddUpadateSectionMutation();
   const { isOpen, openModal, closeModal } = useModal();
   const [updateLoading, setupdateLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
     handleSubmit: handleUpdateSubmit,
     setValue,
     formState: { errors: UpdateError },
-  } = useForm<FAQ>({});
+  } = useForm<LeftSideTextRightSideContactForm>({});
 
   useEffect(() => {
     console.log("selectedSection updated:", selectedSection);
@@ -49,23 +49,25 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
     if (sectionValue.content !== "") {
       const Details = JSON.parse(sectionValue.content);
       setValue("heading", Details.heading)
-      setValue("categorySlug", Details.categorySlug)
+      setValue("description", Details.description)
+
     } else {
       setValue("heading", "")
-      setValue("categorySlug", "")
+      setValue("description", "")
+
     }
     openModal();
   }, [selectedSection, openModal, sectionValue, setValue]); // Runs whenever selectedSection changes
 
-  const onSubmitUpdate = async (data: FAQ) => {
+  const onSubmitUpdate = async (data: LeftSideTextRightSideContactForm) => {
     setupdateLoading(true);
 
     try {
-      const { heading, categorySlug, order } = data;
+      const { heading, description, order } = data;
 
-      const newContent = { "heading": heading, "categorySlug": categorySlug, }
+      const newContent = { "heading": heading, "description": description }
       console.log("page updated:", sectionValue.page);
-      const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "FAQ", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
+      const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "LeftSideTextRightSideContactForm", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 
       if (result.success) {
         updateSections(result.data)
@@ -142,7 +144,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
           <form
             onChange={handleFormChange} onSubmit={handleUpdateSubmit(onSubmitUpdate)} className="flex flex-col">
             <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Update FAQ
+              Update Left Side Text Right Side Contact Form
             </h4>
             <div className="custom-scrollbar h-[400px] overflow-y-auto px-2 pb-3">
 
@@ -208,19 +210,19 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
 
 
                   <div className="col-span-1">
-                    <Label>category Slug</Label>
+                    <Label>Description</Label>
 
                     <Textarea
-                      {...registerUpdate("categorySlug", {
-                        required: "categorySlug is required",
+                      {...registerUpdate("description", {
+                        required: "Description is required",
                       })}
-                      placeholder="categorySlug"
+                      placeholder="Description"
                       className="pl-10"
                     />
 
-                    {UpdateError.categorySlug && (
+                    {UpdateError.description && (
                       <p className="text-red-700 text-sm">
-                        {UpdateError.categorySlug.message}
+                        {UpdateError.description.message}
                       </p>
                     )}
 

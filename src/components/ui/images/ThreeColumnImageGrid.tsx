@@ -16,7 +16,7 @@ export default function ThreeColumnImageGrid() {
   const [currentPagen, setCurrentPagen] = useState<number>(1)
   const [toFrom, setToFrom] = useState<string>("")
   const [totalPage, setTotalPage] = useState<number>(1)
-  const limit = 12;
+  const limit = 50;
   const { data: apiResponse = {} } = useGetImagesQuery({ page: currentPagen, limit: limit })
 
   useEffect(() => {

@@ -55,7 +55,7 @@ export default function LeftSideImageRightSideTextView({ content }: AddProps): R
         <div className="flex-1 text-[18px] text-[#596475] p-5  leading-[1.66em] ">
           <h2 className="text-left">{contentData?.heading}</h2>
 
-          <div dangerouslySetInnerHTML={{ __html: contentData?.description || "" }} />
+          <div className="text-black" dangerouslySetInnerHTML={{ __html: contentData?.description || "" }} />
 
         </div>
       </div>

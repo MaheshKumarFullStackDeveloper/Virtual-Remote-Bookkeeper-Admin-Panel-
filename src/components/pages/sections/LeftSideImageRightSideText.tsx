@@ -145,7 +145,7 @@ export default function LeftSideImageRightSideText({ selectedSection, sectionVal
           <form
             onChange={handleFormChange} onSubmit={handleUpdateSubmit(onSubmitUpdate)} className="flex flex-col">
             <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Update Left Side Image Right Side Text ---
+              Update Left Side Image Right Side Text
             </h4>
             <div className="custom-scrollbar h-[400px] overflow-y-auto px-2 pb-3">
 
