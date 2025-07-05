@@ -37,8 +37,7 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
           width={725}
           height={352}
           alt="home-banner"
-          className="transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:backdrop-blur-md"
-        ></Image>
+        />
 
 
       </div>
