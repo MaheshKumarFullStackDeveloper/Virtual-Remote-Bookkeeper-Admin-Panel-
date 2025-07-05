@@ -32,14 +32,14 @@ export default function FAQView({ content }: AddProps): React.JSX.Element {
       <h2>{contentData?.heading}</h2>
 
       <div className="flex justify-center max-w-[1100px] item-center w-full m-auto p-2">
-        <Image
+        {/*   <Image
           src={"/faqview.png"}
           width={725}
           height={352}
           alt="home-banner"
         />
 
-
+ */}
       </div>
     </div>
   </>)
