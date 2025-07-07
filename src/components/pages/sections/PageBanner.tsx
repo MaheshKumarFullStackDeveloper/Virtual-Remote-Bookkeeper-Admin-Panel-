@@ -21,6 +21,7 @@ type AddProps = {
 
 type PageBanner = {
   topHeading: string;
+  mainHeading: string;
   mainHeading1: string;
   mainHeading2: string;
   mainHeading3: string;
@@ -59,6 +60,7 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
     if (sectionValue.content !== "") {
       const Details = JSON.parse(sectionValue.content);
       setValue("topHeading", Details.topHeading)
+      setValue("mainHeading", Details.mainHeading)
       setValue("mainHeading1", Details.mainHeading1)
       setValue("mainHeading2", Details.mainHeading2)
       setValue("mainHeading3", Details.mainHeading3)
@@ -71,6 +73,7 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
       setValue("order", Details.order)
     } else {
       setValue("topHeading", "")
+      setValue("mainHeading", "")
       setValue("mainHeading1", "")
       setValue("mainHeading2", "")
       setValue("mainHeading3", "")
@@ -89,9 +92,9 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
     setupdateLoading(true);
 
     try {
-      const { topHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl } = data;
+      const { topHeading, mainHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl } = data;
 
-      const newContent = { topHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl }
+      const newContent = { topHeading, mainHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "PageBanner", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 
@@ -229,6 +232,25 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
                     {UpdateError.topHeading && (
                       <p className="text-red-700 text-sm">
                         {UpdateError.topHeading.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="col-span-1">
+                    <Label>Main Heading </Label>
+
+                    <Input
+                      {...registerUpdate("mainHeading", {
+                        required: "Section Main Heading  is required",
+                      })}
+                      placeholder="Main Heading"
+                      type="text"
+
+                      className="pl-10"
+                    />
+
+                    {UpdateError.mainHeading && (
+                      <p className="text-red-700 text-sm">
+                        {UpdateError.mainHeading.message}
                       </p>
                     )}
                   </div>

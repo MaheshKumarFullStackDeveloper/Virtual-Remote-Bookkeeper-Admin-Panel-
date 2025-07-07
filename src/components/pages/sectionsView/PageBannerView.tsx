@@ -10,6 +10,7 @@ type AddProps = {
 
 type PageBanner = {
   topHeading: string;
+  mainHeading: string;
   mainHeading1: string;
   mainHeading2: string;
   mainHeading3: string;
@@ -50,6 +51,10 @@ export default function PageBannerView({ content }: AddProps): React.JSX.Element
           <p className="leading-9 font-normal text-[25px] text-white font-Roboto mt-[50px]">
             {contentData?.topHeading}
           </p>
+
+          <span
+            className={`text-[#DAA520] border-b-[5px] text-left border-solid border-[#DAA520] rounded-[10px] capitalize -tracking-normal font-medium   text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px] `}
+          >{contentData?.mainHeading} </span><br />
 
           <span
             className={`text-[#DAA520] border-b-[5px] text-left border-solid border-[#DAA520] rounded-[10px] capitalize -tracking-normal font-medium   text-[40px] sm:text-[40px] md:text-[55px] lg:text-[75px] leading-[55px] sm:leading-[55px] md:leading-[70px] lg:leading-[92px] `}
