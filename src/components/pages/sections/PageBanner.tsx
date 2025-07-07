@@ -274,7 +274,7 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
                     <Label>Main Heading 3</Label>
 
                     <Input
-                      {...registerUpdate("mainHeading1", {
+                      {...registerUpdate("mainHeading3", {
                         required: "Section Main Heading 3 is required",
                       })}
                       placeholder="Main Heading 3"
