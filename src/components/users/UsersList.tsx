@@ -112,7 +112,7 @@ export default function UsersList() {
                 {isFetching ? (
                   <div className="text-center py-6">
                     <span className="animate-spin inline-block w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full"></span>
-                    <p className="mt-2 text-sm text-gray-500">Loading faqs...</p>
+                    <p className="mt-2 text-sm text-gray-500">Loading Page...</p>
                   </div>
                 ) : (<>
                   {users && users.length > 0 ? (<>
