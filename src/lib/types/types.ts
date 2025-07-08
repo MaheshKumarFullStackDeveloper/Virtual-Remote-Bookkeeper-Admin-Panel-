@@ -1,32 +1,3 @@
-export interface BookDetails {
-
-  _id: string;
-  title: string;
-  images: string[];
-  subject: string;
-  category: string;
-  condition: string;
-  classType: string;
-  price: number;
-  author: string;
-  edition?: string;
-  description?: string;
-  finalPrice: number;
-  shippingCharge: string;
-  seller: UserData;
-  paymentMode: 'UPI' | 'Bank Account';
-  createdAt: Date;
-  paymentDetails: {
-    upi?: string;
-    bankDetails?: {
-      accountNumber: string;
-      ifscCode: string;
-      bankName: string;
-
-    }
-
-  }
-}
 
 export interface Sections {
   _id: string;
@@ -139,6 +110,7 @@ export interface UserData {
   agreeTerms: boolean;
   profilePicture?: string;
   phoneNumber?: string;
+  password?: string;
   addresses: Address[]
 }
 

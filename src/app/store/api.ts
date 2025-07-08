@@ -20,7 +20,16 @@ const API_URLS = {
    LOGOUT: `${BASE_URL}/auth/logout`,
    UPDATE_USER_PROFILE: `${BASE_URL}/user/profile/update`,
    UPDATE_USER_PASSWORD: `${BASE_URL}/user/profile/update-password`,
-
+   ADDUSER: `${BASE_URL}/user/profile/create`,
+   DELETE_USER_BY_ID: (id: string) => `${BASE_URL}/user/profile/${id}`,
+   USERS: ({ page, limit, search }: { page: number; limit: number; search: string }) => {
+      let url = `/user/profile/userslist?page=${page}&limit=${limit}`;
+      if (search) {
+         url += `&search=${encodeURIComponent(search)}`;
+      }
+      console.log("get all Users", url);
+      return url;
+   },
 
    //IMAGE related URL
    IMAGE: `${BASE_URL}/image`,
@@ -43,6 +52,7 @@ const API_URLS = {
    },
    GET_PAGE_BY_SLUG: (slug: string) => `${BASE_URL}/page/${slug}`,
    DELETE_PAGES_BY_ID: (id: string) => `${BASE_URL}/page/${id}`,
+
 
    //Blog related URL
    BLOG: `${BASE_URL}/blog`,
@@ -145,12 +155,33 @@ export const api = createApi({
             body: userData
          })
       }),
+      getUSERS: builder.query({
+         query: ({ page, limit, search }) =>
+            API_URLS.USERS({ page, limit, search }),
+         providesTags: ["user"],
+      }),
       updateUser: builder.mutation({
          query: (userData) => ({
             url: API_URLS.UPDATE_USER_PROFILE,
             method: "PUT",
             body: userData
-         })
+         }),
+         invalidatesTags: ["user"]
+      }),
+      deleteUserById: builder.mutation({
+         query: (userId) => ({
+            url: API_URLS.DELETE_USER_BY_ID(userId),
+            method: "DELETE"
+         }),
+         invalidatesTags: ["user"]
+      }),
+      addUser: builder.mutation({
+         query: (userData) => ({
+            url: API_URLS.ADDUSER,
+            method: "POST",
+            body: userData
+         }), invalidatesTags: ["user"]
+
       }),
       updateUserPassword: builder.mutation({
          query: (userData) => ({
@@ -312,6 +343,7 @@ export const api = createApi({
          invalidatesTags: ["Faq"]
       }),
 
+
       getFAQs: builder.query({
          query: ({ page, limit, search }) =>
             API_URLS.GET_FAQS({ page, limit, search }),
@@ -408,6 +440,7 @@ export const api = createApi({
          }),
          invalidatesTags: ["Page"]
       }),
+
       getPages: builder.query({
          query: ({ page, limit, search }) => API_URLS.GET_PAGES({ page, limit, search }),
          providesTags: ["Page"]
@@ -457,6 +490,9 @@ export const {
    useUpdateUserMutation,
    useUpdateUserPasswordMutation,
    useForgotPasswordMutation,
+   useGetUSERSQuery,
+   useAddUserMutation,
+   useDeleteUserByIdMutation,
 
    useUploadImageMutation,
    useDeleteImageByIdMutation,
