@@ -12,7 +12,7 @@ import { TrashIcon } from "lucide-react";
 import { useDeleteUserByIdMutation, useGetUSERSQuery } from "@/app/store/api";
 import Pagination from "../tables/Pagination";
 import toast from "react-hot-toast";
-import { AlertProps, UserData } from "@/lib/types/types";
+import { UserData } from "@/lib/types/types";
 
 
 
@@ -147,7 +147,7 @@ export default function UsersList() {
                       {/* Table Body */}
                       <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                         {users.map((user, index) => (
-                          <TableRow key={user._id}>
+                          <TableRow key={index}>
 
                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                               {user.name}

@@ -19,7 +19,7 @@ export default function AddUser() {
 
   const { isOpen, openModal, closeModal } = useModal();
   const [updateLoading, setupdateLoading] = useState(false);
-  const [useAddUser] = useAddUserMutation()
+  const [addUser] = useAddUserMutation()
   const [alerts, setAlerts] = useState<AlertProps[] | null>(null);
 
   const {
@@ -34,7 +34,7 @@ export default function AddUser() {
 
     try {
       const { name, email, password } = data;
-      const result = await useAddUser({ name, email, password }).unwrap();
+      const result = await addUser({ name, email, password }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 
