@@ -62,7 +62,7 @@ export default function LeftSideImageRightSideContactForm({ selectedSection, sec
     try {
       const { image, order } = data;
 
-      const newContent = { "image": image }
+      const newContent = { "image": image.trim().replace(/\s+/g, '') }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "LeftSideImageRightSideContactForm", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

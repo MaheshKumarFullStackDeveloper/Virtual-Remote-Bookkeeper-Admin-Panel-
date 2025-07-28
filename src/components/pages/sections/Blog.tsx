@@ -67,7 +67,7 @@ export default function Blog({ selectedSection, sectionValue, updateSections, up
     try {
       const { heading, categorySlug, order, description } = data;
 
-      const newContent = { "heading": heading, "categorySlug": categorySlug, "description": description }
+      const newContent = { "heading": heading, "categorySlug": categorySlug.trim().replace(/\s+/g, ''), "description": description }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "Blog", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

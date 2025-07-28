@@ -109,7 +109,7 @@ export default function TwoRowTwoColumn({ selectedSection, sectionValue, updateS
     try {
       const { mainHeading, heading1, buttonUrl1, buttonText1, description1, heading2, buttonUrl2, buttonText2, description2, heading3, buttonUrl3, buttonText3, description3, heading4, buttonUrl4, buttonText4, description4, order } = data;
 
-      const newContent = { "mainHeading": mainHeading, "heading1": heading1, "buttonUrl1": buttonUrl1, "buttonText1": buttonText1, "description1": description1, "heading2": heading2, "buttonUrl2": buttonUrl2, "buttonText2": buttonText2, "description2": description2, "heading3": heading3, "buttonUrl3": buttonUrl3, "buttonText3": buttonText3, "description3": description3, "heading4": heading4, "buttonUrl4": buttonUrl4, "buttonText4": buttonText4, "description4": description4 }
+      const newContent = { "mainHeading": mainHeading, "heading1": heading1, "buttonUrl1": buttonUrl1.trim().replace(/\s+/g, ''), "buttonText1": buttonText1, "description1": description1, "heading2": heading2, "buttonUrl2": buttonUrl2.trim().replace(/\s+/g, ''), "buttonText2": buttonText2, "description2": description2, "heading3": heading3, "buttonUrl3": buttonUrl3.trim().replace(/\s+/g, ''), "buttonText3": buttonText3, "description3": description3, "heading4": heading4, "buttonUrl4": buttonUrl4.trim().replace(/\s+/g, ''), "buttonText4": buttonText4, "description4": description4 }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "TwoRowTwoColumn", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

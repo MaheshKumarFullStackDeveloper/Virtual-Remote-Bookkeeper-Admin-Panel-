@@ -63,7 +63,7 @@ export default function FAQ({ selectedSection, sectionValue, updateSections, upd
     try {
       const { heading, categorySlug, order } = data;
 
-      const newContent = { "heading": heading, "categorySlug": categorySlug, }
+      const newContent = { "heading": heading, "categorySlug": categorySlug.trim().replace(/\s+/g, ''), }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "FAQ", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

@@ -92,7 +92,7 @@ export default function CategoryList() {
 
     try {
       const { title, slug, status, metaTitle, metaDescription, categoryId } = data;
-      const result = await AddUpadateCategory({ title, slug, status, metaTitle, metaDescription, categoryId }).unwrap();
+      const result = await AddUpadateCategory({ title, slug: slug.trim().replace(/\s+/g, ''), status, metaTitle, metaDescription, categoryId }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 

@@ -74,7 +74,7 @@ export default function AddEditItem({ reloadMenu, resetAddEditItem, sectionMenu,
         updateMenu = sectionMenu?._id;
       }
 
-      const result = await AddUpadateItem({ title, link, order, menu: updateMenu, parent, itemId }).unwrap();
+      const result = await AddUpadateItem({ title, link: link.trim().replace(/\s+/g, ''), order, menu: updateMenu, parent, itemId }).unwrap();
       if (result.success) {
 
         setAlerts([

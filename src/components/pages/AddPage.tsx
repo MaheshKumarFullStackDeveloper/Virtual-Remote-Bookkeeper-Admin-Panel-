@@ -34,7 +34,7 @@ export default function AddPage() {
 
     try {
       const { title, slug, status, metaTitle, metaDescription } = data;
-      const result = await AddUpadatePage({ title, slug, status, metaTitle, metaDescription }).unwrap();
+      const result = await AddUpadatePage({ title, slug: slug.trim().replace(/\s+/g, ''), status, metaTitle, metaDescription }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 

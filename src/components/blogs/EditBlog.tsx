@@ -73,7 +73,7 @@ export default function EditBlog() {
     try {
       const { title, slug, status, metaTitle, metaDescription, content, categories, image, blogId } = data;
 
-      const result = await AddUpadateBlog({ blogId, title, slug, status, metaTitle, categories, image, metaDescription, content }).unwrap();
+      const result = await AddUpadateBlog({ blogId, title, slug: slug.trim().replace(/\s+/g, ''), status, metaTitle, categories, image: image.trim().replace(/\s+/g, ''), metaDescription, content }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 

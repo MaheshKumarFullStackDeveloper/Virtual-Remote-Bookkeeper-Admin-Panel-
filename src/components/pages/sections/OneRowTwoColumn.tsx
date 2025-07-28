@@ -92,7 +92,7 @@ export default function OneRowTwoColumn({ selectedSection, sectionValue, updateS
     try {
       const { mainHeading, heading1, buttonUrl1, buttonText1, description1, heading2, buttonUrl2, buttonText2, description2, mainButtonUrl, mainButtonText, order } = data;
 
-      const newContent = { "mainHeading": mainHeading, "heading1": heading1, "buttonUrl1": buttonUrl1, "buttonText1": buttonText1, "description1": description1, "heading2": heading2, "buttonUrl2": buttonUrl2, "buttonText2": buttonText2, "description2": description2, "mainButtonUrl": mainButtonUrl, "mainButtonText": mainButtonText }
+      const newContent = { "mainHeading": mainHeading, "heading1": heading1, "buttonUrl1": buttonUrl1.trim().replace(/\s+/g, ''), "buttonText1": buttonText1, "description1": description1, "heading2": heading2, "buttonUrl2": buttonUrl2.trim().replace(/\s+/g, ''), "buttonText2": buttonText2, "description2": description2, "mainButtonUrl": mainButtonUrl.trim().replace(/\s+/g, ''), "mainButtonText": mainButtonText }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "OneRowTwoColumn", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

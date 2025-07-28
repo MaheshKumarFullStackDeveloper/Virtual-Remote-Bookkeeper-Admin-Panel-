@@ -72,7 +72,7 @@ export default function LeftSideTextRightSideImageWithButton({ selectedSection, 
     try {
       const { buttonText, buttonUrl, heading, description, image, order } = data;
 
-      const newContent = { "buttonText": buttonText, "buttonUrl": buttonUrl, "heading": heading, "description": description, "image": image }
+      const newContent = { "buttonText": buttonText, "buttonUrl": buttonUrl.trim().replace(/\s+/g, ''), "heading": heading, "description": description, "image": image.trim().replace(/\s+/g, '') }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "LeftSideTextRightSideImageWithButton", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

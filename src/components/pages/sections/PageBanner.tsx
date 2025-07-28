@@ -91,7 +91,7 @@ export default function PageBanner({ selectedSection, sectionValue, updateSectio
     try {
       const { topHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl } = data;
 
-      const newContent = { topHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage, rightImage, leftImageText, buttonUrl }
+      const newContent = { topHeading, mainHeading1, mainHeading2, mainHeading3, order, bottomHeading, buttonText, leftImage: leftImage.trim().replace(/\s+/g, ''), rightImage: rightImage.trim().replace(/\s+/g, ''), leftImageText, buttonUrl: buttonUrl.trim().replace(/\s+/g, '') }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "PageBanner", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

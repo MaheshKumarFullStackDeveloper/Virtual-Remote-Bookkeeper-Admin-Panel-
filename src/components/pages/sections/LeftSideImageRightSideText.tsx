@@ -66,7 +66,7 @@ export default function LeftSideImageRightSideText({ selectedSection, sectionVal
     try {
       const { heading, description, image, order } = data;
 
-      const newContent = { "heading": heading, "description": description, "image": image }
+      const newContent = { "heading": heading, "description": description, "image": image.trim().replace(/\s+/g, '') }
       console.log("page updated:", sectionValue.page);
       const result = await addUpadateSection({ content: JSON.stringify(newContent), title: "LeftSideImageRightSideText", pageId: sectionValue.page, order, sectionId: sectionValue._id }).unwrap();
 

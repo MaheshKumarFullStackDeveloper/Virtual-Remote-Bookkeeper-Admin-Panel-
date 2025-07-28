@@ -92,7 +92,7 @@ export default function FAQCategoryList() {
 
     try {
       const { title, slug, categoryId } = data;
-      const result = await AddUpadateFaqcategory({ title, slug, categoryId }).unwrap();
+      const result = await AddUpadateFaqcategory({ title, slug: slug.trim().replace(/\s+/g, ''), categoryId }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 

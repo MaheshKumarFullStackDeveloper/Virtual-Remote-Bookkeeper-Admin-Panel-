@@ -16,6 +16,25 @@ export default function ImageUpload() {
     const file = event.target.files?.[0];
     setIsLoading(true);
     if (file) {
+
+
+      // Validate image type
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/svg+xml', 'image/webp', 'image/svg'];
+
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Only PNG, JPG, JPEG, GIF, SVG, and WEBP formats are allowed", { position: 'bottom-center' });
+        setIsLoading(false);
+        return;
+      }
+
+      // Validate image size (in bytes)
+      const maxSizeInBytes = 150 * 1024; // 150KB
+      if (file.size > maxSizeInBytes) {
+        toast.error("Image size must be less than 150KB", { position: 'bottom-center' });
+        setIsLoading(false);
+        return;
+      }
+
       const formData = new FormData();
       formData.append("images", file);
       console.log("Selected file:", file.name);

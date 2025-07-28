@@ -101,7 +101,7 @@ export default function PagesList() {
 
     try {
       const { title, slug, status, metaTitle, metaDescription, pageId } = data;
-      const result = await AddUpadatePage({ title, slug, status, metaTitle, metaDescription, pageId }).unwrap();
+      const result = await AddUpadatePage({ title, slug: slug.trim().replace(/\s+/g, ''), status, metaTitle, metaDescription, pageId }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 

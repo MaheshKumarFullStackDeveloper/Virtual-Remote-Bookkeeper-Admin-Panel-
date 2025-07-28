@@ -46,7 +46,7 @@ export default function AddBlog() {
 
     try {
       const { title, slug, status, metaTitle, metaDescription, content, categories, image } = data;
-      const result = await AddUpadateBlog({ title, slug, status, metaTitle, categories, image, metaDescription, content }).unwrap();
+      const result = await AddUpadateBlog({ title, slug: slug.trim().replace(/\s+/g, ''), status, metaTitle, categories, image: image.trim().replace(/\s+/g, ''), metaDescription, content }).unwrap();
       console.log("this is Update result", result)
       if (result.success) {
 
